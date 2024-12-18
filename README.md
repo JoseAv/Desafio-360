@@ -1,7 +1,7 @@
 #### Tareas a seguir
 
 
-Generales
+## Generales
 
 - [] Crear Db
 - [] Iniciar back End
@@ -17,7 +17,10 @@ Generales
 - [] Crear rutas
 - [] Crear los controllers con clases
 - [] Crear el modelo de db
-- [] Conectar deb
+- [] Conectar db
+- [] Intalar Multer
+- [] usar galery
+- [] mandar imagenes
 - [] Crear todos los endpoints
 - [] Instalar Bcrypt
 - [] Instalar JsonWebToken
@@ -37,3 +40,5 @@ Generales
 - [] hacer las llamadas
 - [] Instalar ReactRouterDom
 - [] hacer pagina de Productos
+- [] proteger rutas
+
