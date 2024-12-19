@@ -1,12 +1,12 @@
 import { Router } from "express";
-import { userControllers } from '../controllers/user.js'
+import { ControllersUser } from '../controllers/user.js'
 
 
-export const routesUser = async ({ userModel }) => {
+export const routesUser = ({ ModelUsers }) => {
 
     const userRouter = Router()
-    const userController = new userControllers({ userModel })
-    userRouter.get('/', userController.userSeach)
+    const userController = new ControllersUser({ ModelUsers })
+    userRouter.post('/', userController.userAccion)
 
 
     return userRouter

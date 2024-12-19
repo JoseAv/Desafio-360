@@ -3,20 +3,20 @@
 
 ## Generales
 
-- [] Crear Db
-- [] Iniciar back End
+- [x] Crear Db
+- [x] Iniciar back End
 - [] Conectar base de datos
 
 
 ## Back End
 
-- [] Iniciar PacketJson
-- [] Usar slinter y Standar
-- [] Iniciar servidor
+- [x] Iniciar PacketJson
+- [x] Usar slinter y Standar
+- [x] Iniciar servidor
 - [] Impotar Middelwares
-- [] Crear rutas
-- [] Crear los controllers con clases
-- [] Crear el modelo de db
+- [x] Crear rutas
+- [x] Crear los controllers con clases
+- [x] Crear el modelo de db
 - [] Conectar db
 - [] Intalar Multer
 - [] usar galery

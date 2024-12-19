@@ -1,20 +1,26 @@
 import express from 'express'
 import { routesUser } from './routes/user.js'
-import { userModel } from './model/user.js'
+import { ModelUsers } from './model/user.js'
+import cors from 'cors'
 
 
 const app = express()
-app.use(express.json())
-const PORT = process.env.PORT || 3000
+
+const PORT = process.env.PORT ?? 3000
 
 
-const users = async ({ userModel }) => {
-    app.use('/user', await routesUser(userModel))
+const main = async ({ ModelUsers }) => {
+    app.use(express.json())
+    app.use(cors())
+    app.use('/user', routesUser({ ModelUsers }))
+
+
+    app.listen(PORT, () => {
+        console.log('LISTEN IN PORT', PORT)
+    })
+
 }
 
-users({ userModel })
+main({ ModelUsers })
 
 
-app.listen(PORT, () => {
-    console.log('LISTEN IN PORT', PORT)
-})
