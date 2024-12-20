@@ -5,6 +5,7 @@ export class ControllersUser {
         this.userModelDb = ModelUsers
     }
 
+
     userAccion = async (req, res) => {
         const { acction, data } = req.body
         let responseData;
@@ -21,11 +22,6 @@ export class ControllersUser {
             res.json(await userCreate())
         }
     }
-
-
-
-
-
 
 
 }

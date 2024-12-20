@@ -17,7 +17,9 @@
 - [x] Crear rutas
 - [x] Crear los controllers con clases
 - [x] Crear el modelo de db
-- [] Conectar db
+- [x] Conectar db
+- []  Rutas sin dependencias
+- []  Rutas con dependencias
 - [] Intalar Multer
 - [] usar galery
 - [] mandar imagenes
@@ -28,7 +30,6 @@
 - [] Instalar cookieParse
 - [] Instalar Zod
 - [] Revisar DB 
-- [] Realizar todos los cruds
 
 
 ## Front End
