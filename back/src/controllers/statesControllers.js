@@ -1,4 +1,4 @@
-
+import { updateUserValidation, CreateUserValidation } from '../validation/stateValidation'
 
 
 export class ControllersStates {
@@ -15,6 +15,7 @@ export class ControllersStates {
         }
 
         if (acction === "C") {
+            updateUserValidation(data)
             const result = await this.model.createStates({ name: data.name })
             if (result.success) {
                 res.status(result.statusCode).json({ message: result.message })
