@@ -8,9 +8,7 @@ export class ModelState {
     static statesRead = async () => {
         try {
             await sequelize.authenticate();
-            console.log('Connection has been established successfully.');
         } catch (error) {
-            console.error('Unable to connect to the database:', error);
         }
         return
     }
@@ -49,7 +47,7 @@ export class ModelState {
                 replacements: { id: id },
                 type: sequelize.QueryTypes.SELECT
             })
-            if (!comprobateName.length > 0) return ValidationResponse.Denied({ message: MessagePersonalise.dataNotExisting(name) })
+            if (!comprobateName.length > 0) return ValidationResponse.Denied({ message: MessagePersonalise.dataNotExisting('ID') })
 
             await sequelize.query('EXEC  update_estado :id, :nombre', {
                 replacements: { id: id, nombre: newName },

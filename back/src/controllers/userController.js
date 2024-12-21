@@ -14,7 +14,6 @@ export class ControllersUser {
 
         if (acction === 'R') {
             responseData = await this.userModelDb.userRead()
-            console.log(responseData)
             res.send('Complete Orden')
         }
 

@@ -7,14 +7,14 @@ const UserSchema = z.object({
 })
 
 
+export const CreateUserValidation = (data) => {
+    const newSchema = UserSchema.pick({ name: true })
+    return newSchema.safeParse(data)
+}
 
-export const updateUserValidation = ({ data }) => {
+export const updateUserValidation = (data) => {
     const newSchema = UserSchema.partial().extend({ id: z.number() })
     return newSchema.safeParse(data)
 }
 
-export const CreateUserValidation = ({ data }) => {
-    const newSchema = UserSchema.pick({ name: true })
-    return newSchema.safeParse(data)
-}
 

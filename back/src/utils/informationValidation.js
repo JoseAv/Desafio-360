@@ -1,7 +1,6 @@
 export class ValidationResponse {
 
     static Accepted({ message, dataQuery = null, statusCode = 200 }) {
-        console.log('Mensaje', message)
         return {
             success: true,
             message,
@@ -10,8 +9,8 @@ export class ValidationResponse {
         };
     }
 
-
     static Denied({ message, error = null, statusCode = 400 }) {
+        console.log(message)
         return {
             success: false,
             message,
@@ -25,7 +24,7 @@ export class ValidationResponse {
 
 export class MessagePersonalise {
 
-    static dataEmpty = (campo) => {
+    static DataEmpty = (campo) => {
         return `Debe de ingresar un ${campo}`
     }
 
@@ -35,7 +34,7 @@ export class MessagePersonalise {
     }
 
     static dataNotExisting = (campo) => {
-        return `${campo} no existe registro en la base de datos`
+        return `${campo} no existe `
 
     }
 
@@ -52,7 +51,6 @@ export class MessagePersonalise {
     static failPeticion = (campo) => {
         return `Ah fallado la peticion llamado a ${campo}`
     }
-
 
 }
 
