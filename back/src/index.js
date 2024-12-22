@@ -19,7 +19,7 @@ const dependencies = {
 const main = async (dependencies) => {
     app.use(express.json())
     app.use(cors())
-    app.use('/user', routesUser({ ModelUsers: dependencies.ModelUsers }))
+    app.use('/', routesUser({ ModelUsers: dependencies.ModelUsers }))
     app.use('/states', stateRoutes({ ModelState: dependencies.ModelState }))
     app.use('/rol', rolRoute({ ModelRol: dependencies.ModelRol }))
 

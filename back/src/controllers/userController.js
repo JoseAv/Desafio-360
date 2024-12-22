@@ -1,4 +1,5 @@
-
+import { updateUserValidation, CreateUserValidation } from '../validation/stateValidation.js'
+import { ValidationResponse, MessagePersonalise } from '../utils/informationValidation.js'
 
 export class ControllersUser {
     constructor({ ModelUsers }) {
@@ -6,21 +7,6 @@ export class ControllersUser {
     }
 
 
-    userAccion = async (req, res) => {
-        const { acction, data } = req.body
-        let responseData;
-
-        if (!acction) return res.status(500).json({ message: 'Debe de enviar una accion' })
-
-        if (acction === 'R') {
-            responseData = await this.userModelDb.userRead()
-            res.send('Complete Orden')
-        }
-
-        if (acction === 'C') {
-            res.json(await userCreate())
-        }
-    }
 
 
 }
