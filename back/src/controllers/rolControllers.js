@@ -26,11 +26,13 @@ export class rolControllers {
 
         if (acction === 'U') {
             resultValiaton = updateRolValidation(data)
+            console.log(resultValiaton)
             if (!resultValiaton.success) {
                 sendValidation = ValidationResponse.Denied({ message: MessagePersonalise.DataEmpty('ID') })
                 return res.status(sendValidation.statusCode).json({ ...sendValidation })
             }
-            sendValidation = await this.modelRol.createRol({ nombre: data.nombre })
+            sendValidation = await this.modelRol.updateRol({ nombre: data.nombre, id: data.id })
+            console.log(sendValidation)
             return res.status(sendValidation.statusCode).json({ ...sendValidation })
         }
 
