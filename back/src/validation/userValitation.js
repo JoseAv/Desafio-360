@@ -15,6 +15,13 @@ const userValidation = z.object({
 })
 
 
+const userLogin = z.object({
+    correo_electronico: z.string().email('No es un email Valido'),
+    password: z.string(),
+})
+
+
+
 
 export const createUser = (data) => {
     let newSchema = userValidation.partial({
@@ -28,15 +35,12 @@ export const createUser = (data) => {
 }
 
 export const updateUserValidation = (data) => {
-    console.log('dentro de validacion', data)
     let newSchema = userValidation.partial()
     let resultado = newSchema.safeParse(data)
-
     return resultado
 }
 
 
 export const ComprobateUser = (data) => {
-    let newSchema = userValidation.partial({ id: z.number().int() })
-    return newSchema.safeParse(data)
+    return userLogin.safeParse(data)
 }

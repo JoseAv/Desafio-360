@@ -10,7 +10,6 @@ export class ValidationResponse {
     }
 
     static Denied({ message, error = null, statusCode = 400 }) {
-        console.log(message)
         return {
             success: false,
             message,
@@ -50,6 +49,18 @@ export class MessagePersonalise {
 
     static failPeticion = (campo) => {
         return `Ah fallado la peticion llamado a ${campo}`
+    }
+
+    static passUSer = () => {
+        return `Usuario aceptado`
+    }
+
+    static errorPassword = () => {
+        return `Correo o contraseña incorrecta`
+    }
+
+    static errorSession = () => {
+        return `No a iniciado secion`
     }
 
 }
