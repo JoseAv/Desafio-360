@@ -1,5 +1,6 @@
 import { createProductValidation, updateProductValidation } from '../validation/productValidation.js'
 import { ValidationResponse, MessagePersonalise } from '../utils/informationValidation.js'
+import cloudinary from '../utils/configCloudinary.js'
 
 
 export class ControllerProducts {
@@ -9,17 +10,18 @@ export class ControllerProducts {
 
 
     accionProducts = async (req, res) => {
-        const { acction, data } = req.body
-        let newFoto
+
+        const data = JSON.parse(req.body.data)
+        console.log(data)
+
         if (!req.session) return ValidationResponse.Denied({ message: MessagePersonalise.errorSession('Dato correcto') })
 
-        if (acction === 'C') {
-            let newFoto = null;
-
+        if (data.acction === 'C') {
+            let newFoto
             if (req.file) {
                 try {
                     const uploadResult = await uploadToCloudinary(req.file.buffer);
-                    newFoto = uploadResult.secure_url; // URL de la imagen
+                    newFoto = uploadResult.secure_url;
                     console.log('Imagen subida con éxito:', newFoto);
                 } catch (error) {
                     console.error('Error al subir a Cloudinary:', error);
@@ -27,13 +29,13 @@ export class ControllerProducts {
                 }
             }
 
-            const validationProducts = createProductValidation(data);
+            const validationProducts = createProductValidation(data.data);
             if (!validationProducts.success) {
                 return ValidationResponse.Denied({ message: MessagePersonalise.DataEmpty('Dato correcto') });
             }
 
             const newProducts = await this.modelProducts.createProducts({
-                data: { ...data, fotoUrl: newFoto },
+                data: { ...data.data, fotoUrl: newFoto },
             });
             return res.status(newProducts.statusCode).json({ ...newProducts });
         }

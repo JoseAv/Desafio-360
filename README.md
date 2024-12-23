@@ -5,7 +5,7 @@
 
 - [x] Crear Db
 - [x] Iniciar back End
-- [] Conectar base de datos
+- [x] Conectar base de datos
 
 
 ## Back End
@@ -13,7 +13,7 @@
 - [x] Iniciar PacketJson
 - [x] Usar slinter y Standar
 - [x] Iniciar servidor
-- [] Impotar Middelwares
+- [x] Impotar Middelwares
 - [x] Crear rutas
 - [x] Crear los controllers con clases
 - [x] Crear el modelo de db

@@ -24,7 +24,7 @@ export class ModelProducts {
                     codigo: data.codigo,
                     id_estados: data.id_estados ?? 1,
                     precio: data.precio,
-                    foto: data.foto ?? null,
+                    foto: data.fotoUrl ?? null,
                     stock: data.stock
                 },
                 type: sequelize.QueryTypes.SELECT

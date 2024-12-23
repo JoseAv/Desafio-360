@@ -250,15 +250,15 @@ END;
 
 
 
-CREATE OR ALTER PROCEDURE insert_producto
-    @id_categorias INT,
-    @id_usuarios INT,
+CREATE or ALTER  PROCEDURE insert_producto
+    @id_categorias INT = null,
+    @id_usuarios INT = null,
     @nombre VARCHAR(45),
     @marca VARCHAR(45),
     @codigo VARCHAR(45),
-    @id_estados INT,
+    @id_estados INT = 1,
     @precio FLOAT,
-    @foto VARBINARY(MAX) = NULL,
+    @foto VARCHAR(255) = NULL,
 	@stock int
 AS
 BEGIN
@@ -288,6 +288,7 @@ BEGIN
 		@stock
     );
 END;
+
 
 
 
