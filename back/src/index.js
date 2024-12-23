@@ -5,6 +5,7 @@ import { stateRoutes } from './routes/state.js'
 import { rolRoute } from './routes/rol.js'
 import { categoryRoutes } from './routes/categoria.js'
 import { clienteRoutes } from './routes/cliente.js'
+import { ordenRoutes } from './routes/orden.js'
 
 import { ModelUsers } from './model/userModel.js'
 import { ModelState } from './model/statesModel.js'
@@ -12,6 +13,7 @@ import { ModelRol } from './model/rolModel.js'
 import { ModelProducts } from './model/productModel.js'
 import { ModelCategory } from './model/categoriaModel.js'
 import { ModelCliente } from './model/clienteModel.js'
+import { ModelOrden } from './model/ordenModel.js'
 
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
@@ -27,7 +29,8 @@ const dependencies = {
     ModelRol,
     ModelProducts,
     ModelCategory,
-    ModelCliente
+    ModelCliente,
+    ModelOrden,
 }
 
 const main = async (dependencies) => {
@@ -55,6 +58,7 @@ const main = async (dependencies) => {
     app.use('/products', routesProducts({ ModelProducts: dependencies.ModelProducts }))
     app.use('/category', categoryRoutes({ ModelCategory: dependencies.ModelCategory }))
     app.use('/cliente', clienteRoutes({ ModelCliente: dependencies.ModelCliente }))
+    app.use('/orden', ordenRoutes({ ModelOrden: dependencies.ModelOrden }))
 
 
     app.listen(PORT, () => {

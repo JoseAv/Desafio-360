@@ -1,4 +1,4 @@
-import { createClientesValidation, updateClientesValidation } from '../validation/clientesVAlidation.js'
+import { ordenesValidation, updateOrdenesValidation, updateproductos, createproductos } from '../validation/ordenValidation.js'
 import { ValidationResponse, MessagePersonalise } from '../utils/informationValidation.js'
 
 export class ClienteControllers {
@@ -7,7 +7,7 @@ export class ClienteControllers {
     }
 
     acctionsCliente = async (req, res) => {
-        const { acction, data } = req.body
+        const { acction, data, productos } = req.body
         let resultValiaton;
         let sendValidation;
 
@@ -21,6 +21,10 @@ export class ClienteControllers {
             sendValidation = await this.modelCliente.creatCliente({ nombre: data.nombre })
             return res.status(sendValidation.statusCode).json({ ...sendValidation })
         }
+
+
+
+
 
         if (acction === 'U') {
             resultValiaton = updateClientesValidation(data)
