@@ -1,13 +1,18 @@
 import express from 'express'
 import { routesUser } from './routes/user.js'
+import { routesProducts } from './routes/product.js'
 import { stateRoutes } from './routes/state.js'
 import { rolRoute } from './routes/rol.js'
+import { categoryRoutes } from './routes/categoria.js'
+import { clienteRoutes } from './routes/cliente.js'
+
 import { ModelUsers } from './model/userModel.js'
 import { ModelState } from './model/statesModel.js'
 import { ModelRol } from './model/rolModel.js'
 import { ModelProducts } from './model/productModel.js'
-import { routesProducts } from './routes/product.js'
 import { ModelCategory } from './model/categoriaModel.js'
+import { ModelCliente } from './model/clienteModel.js'
+
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import jwt from 'jsonwebtoken'
@@ -22,6 +27,7 @@ const dependencies = {
     ModelRol,
     ModelProducts,
     ModelCategory,
+    ModelCliente
 }
 
 const main = async (dependencies) => {
@@ -48,6 +54,7 @@ const main = async (dependencies) => {
     app.use('/rol', rolRoute({ ModelRol: dependencies.ModelRol }))
     app.use('/products', routesProducts({ ModelProducts: dependencies.ModelProducts }))
     app.use('/category', categoryRoutes({ ModelCategory: dependencies.ModelCategory }))
+    app.use('/cliente', clienteRoutes({ ModelCliente: dependencies.ModelCliente }))
 
 
     app.listen(PORT, () => {
