@@ -30,12 +30,52 @@ export class ModelProducts {
                 type: sequelize.QueryTypes.SELECT
             })
 
+            console.log
+
             return ValidationResponse.Accepted({ message: MessagePersonalise.dataSuccessful('producto') })
 
         } catch (error) {
             return ValidationResponse.Denied({ message: MessagePersonalise.failPeticion('producto'), error: error })
         }
     }
+
+
+    static updateProducts = async ({ data }) => {
+        console.log(data)
+        let newNombre = data.nombre.toLowerCase()
+        try {
+            const nameRepited = await sequelize.query('SELECT  * from productos where id =  :id', {
+                replacements: { id: data.id },
+                type: sequelize.QueryTypes.SELECT
+            })
+            console.log(nameRepited)
+            if (!nameRepited.length > 0) return ValidationResponse.Denied({ message: MessagePersonalise.dataNotExisting('products') })
+
+            await sequelize.query('exec update_producto :id :id_categorias, :id_usuarios, :nombre, :marca, :codigo, :id_estados, :precio, :foto, :stock', {
+                replacements: {
+                    id: data.id,
+                    id_categorias: data.id_categorias ?? null,
+                    id_usuarios: data.id_usuarios,
+                    nombre: newNombre,
+                    marca: data.marca,
+                    codigo: data.codigo,
+                    id_estados: data.id_estados ?? null,
+                    precio: data.precio,
+                    foto: data.fotoUrl ?? null,
+                    stock: data.stock
+                },
+                type: sequelize.QueryTypes.SELECT
+            })
+
+            console.log
+
+            return ValidationResponse.Accepted({ message: MessagePersonalise.dataSuccessful('producto') })
+
+        } catch (error) {
+            return ValidationResponse.Denied({ message: MessagePersonalise.failPeticion('producto'), error: error })
+        }
+    }
+
 
 
 }

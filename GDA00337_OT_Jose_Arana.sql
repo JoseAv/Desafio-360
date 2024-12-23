@@ -489,32 +489,32 @@ BEGIN
 END
 
 
-CREATE OR ALTER PROCEDURE update_producto
+CREATE or ALTER PROCEDURE update_producto
     @id INT,
-    @id_categorias INT,
-    @id_usuarios INT,
-    @nombre VARCHAR(45),
-    @marca VARCHAR(45),
-    @codigo VARCHAR(45),
-    @id_estados INT,
-    @precio FLOAT,
-    @foto VARBINARY(MAX) = NULL,
-	@stock int
+    @id_categorias INT = NULL,
+    @id_usuarios INT = NULL,
+    @nombre VARCHAR(45) = NULL,
+    @marca VARCHAR(45) = NULL,
+    @codigo VARCHAR(45) = NULL,
+    @id_estados INT = NULL,
+    @precio FLOAT = NULL,
+    @foto VARCHAR(255) = NULL,
+    @stock INT = NULL
 AS
 BEGIN
     UPDATE productos
     SET 
-        id_categorias = @id_categorias,
-        id_usuarios = @id_usuarios,
-        nombre = @nombre,
-        marca = @marca,
-        codigo = @codigo,
-        id_estados = @id_estados,
-        precio = @precio,
-        foto = @foto,
-		stock = @stock 
+        id_categorias = COALESCE(@id_categorias, id_categorias),
+        id_usuarios = COALESCE(@id_usuarios, id_usuarios),
+        nombre = COALESCE(@nombre, nombre),
+        marca = COALESCE(@marca, marca),
+        codigo = COALESCE(@codigo, codigo),
+        id_estados = COALESCE(@id_estados, id_estados),
+        precio = COALESCE(@precio, precio),
+        foto = COALESCE(@foto, foto),
+        stock = COALESCE(@stock, stock)
     WHERE id = @id;
-END
+END;
 
 
 

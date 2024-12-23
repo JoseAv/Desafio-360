@@ -9,7 +9,6 @@ export class ControllersUser {
     }
 
     register = async (req, res) => {
-        console.log(req.session)
         if (!req.session) return ValidationResponse.Denied({ message: MessagePersonalise.errorSession('Dato correcto') })
 
         if (!createUser(req.body).success) return ValidationResponse.Denied({ message: MessagePersonalise.DataEmpty('Dato correcto') })
@@ -20,7 +19,6 @@ export class ControllersUser {
 
 
     updateUser = async (req, res) => {
-        console.log(req.session)
         if (!req.session) {
             let ressionValidation = ValidationResponse.Denied({ message: MessagePersonalise.errorSession() })
             return res.status(ressionValidation.statusCode).json({ ...ressionValidation })
