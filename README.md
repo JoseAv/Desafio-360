@@ -21,8 +21,8 @@
 - [x]  Rutas sin dependencias
 - [x]  Rutas con dependencias
 - [x] Intalar Multer
-- [] usar Cloudinary
-- [] mandar imagenes
+- [X] usar Cloudinary
+- [X] mandar imagenes
 - [] Crear todos los endpoints
 - [x] Instalar Bcrypt
 - [x] Instalar JsonWebToken
