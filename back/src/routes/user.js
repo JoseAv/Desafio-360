@@ -7,7 +7,11 @@ export const routesUser = ({ ModelUsers }) => {
     const userRouter = Router()
     const userController = new ControllersUser({ ModelUsers })
 
-    userRouter.post('/',)
+    userRouter.post('/login', userController.login)
+    userRouter.post('/logout',)
+    userRouter.post('/register', userController.register)
+    userRouter.post('/actualizar/:id', userController.updateUser)
 
+    return userRouter
 
 }
