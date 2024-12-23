@@ -225,8 +225,64 @@ END;
 GO
 
 
+CREATE  or ALTER  PROCEDURE  sp_create_orden
+@id_usuario int = NULL,
+@id_estados int = null,
+@nombre_completo varchar(255),
+@direccion varchar(45),
+@telefono varchar(45),
+@correo_electronico varchar(255),
+@fecha_entrega date,
+@total_orden float
+AS
+BEGIN 
+INSERT  INTO  orden (
+id_usuario,
+id_estados,
+fecha_creacion,
+nombre_completo,
+direccion,
+telefono,
+correo_electronico,
+fecha_entrega,
+total_orden
+)
+Values (
+@id_usuario,
+@id_estados,
+GETDATE(),
+@nombre_completo,
+@direccion,
+@telefono,
+@correo_electronico,
+@fecha_entrega,
+@total_orden
+)
+END;
 
-
+CREATE  or ALTER  PROCEDURE  sp_create_detail_orden
+@id_orden int,
+@id_productos int,
+@cantidad int,
+@precio float,
+@subtotal float
+AS
+BEGIN 
+INSERT  INTO  orden_detalles (
+id_orden,
+id_productos,
+cantidad,
+precio,
+subtotal
+)
+Values (
+@id_orden,
+@id_productos,
+@cantidad,
+@precio,
+@subtotal
+)
+END;
 
 CREATE OR ALTER PROCEDURE insert_categoria_productos
     @id_usuario INT,
@@ -649,3 +705,48 @@ GROUP BY
 ORDER BY 
     total_vendidos ASC;
 
+
+
+CREATE  or ALTER  PROCEDURE  sp_update_orden
+@id int,
+@id_usuario int = NULL,
+@id_estados int = null,
+@nombre_completo varchar(255),
+@direccion varchar(45),
+@telefono varchar(45),
+@correo_electronico varchar(255),
+@fecha_entrega date,
+@total_orden float
+AS
+BEGIN 
+UPDATE orden 
+SET 
+id_usuario = COALESCE(@id_usuario,id_usuario),
+id_estados= COALESCE(@id_estados,id_estados),
+nombre_completo= COALESCE(@nombre_completo,nombre_completo),
+direccion= COALESCE(@direccion,direccion),
+telefono= COALESCE(@telefono,telefono),
+correo_electronico= COALESCE(@correo_electronico,correo_electronico),
+fecha_entrega= COALESCE(@fecha_entrega,fecha_entrega),
+total_orden= COALESCE(@total_orden,total_orden)
+WHERE id = @id
+END;
+
+CREATE  or ALTER  PROCEDURE  sp_update_detail_orden
+@id int,
+@id_orden int,
+@id_productos int,
+@cantidad int,
+@precio float,
+@subtotal float
+AS
+BEGIN 
+UPDATE orden_detalles 
+SET 
+id_orden = COALESCE(@id_orden,id_orden),
+id_productos= COALESCE(@id_productos,id_productos),
+cantidad= COALESCE(@cantidad,cantidad),
+precio= COALESCE(@precio,precio),
+subtotal= COALESCE(@subtotal,subtotal)
+WHERE id = @id
+END;
