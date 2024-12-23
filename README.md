@@ -18,18 +18,18 @@
 - [x] Crear los controllers con clases
 - [x] Crear el modelo de db
 - [x] Conectar db
-- []  Rutas sin dependencias
-- []  Rutas con dependencias
-- [] Intalar Multer
-- [] usar galery
+- [x]  Rutas sin dependencias
+- [x]  Rutas con dependencias
+- [x] Intalar Multer
+- [] usar Cloudinary
 - [] mandar imagenes
 - [] Crear todos los endpoints
-- [] Instalar Bcrypt
-- [] Instalar JsonWebToken
-- [] Proteger Rutas
-- [] Instalar cookieParse
-- [] Instalar Zod
-- [] Revisar DB 
+- [x] Instalar Bcrypt
+- [x] Instalar JsonWebToken
+- [x] Proteger Rutas
+- [x] Instalar cookieParse
+- [x] Instalar Zod
+- [x] Revisar DB 
 
 
 ## Front End

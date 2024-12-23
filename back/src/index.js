@@ -5,6 +5,8 @@ import { rolRoute } from './routes/rol.js'
 import { ModelUsers } from './model/userModel.js'
 import { ModelState } from './model/statesModel.js'
 import { ModelRol } from './model/rolModel.js'
+import { ModelProducts } from './model/productModel.js'
+import { routesProducts } from './routes/product.js'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import jwt from 'jsonwebtoken'
@@ -16,7 +18,8 @@ const PORT = process.env.PORT ?? 3000
 const dependencies = {
     ModelUsers,
     ModelState,
-    ModelRol
+    ModelRol,
+    ModelProducts,
 }
 
 const main = async (dependencies) => {
@@ -40,6 +43,7 @@ const main = async (dependencies) => {
     app.use('/', routesUser({ ModelUsers: dependencies.ModelUsers }))
     app.use('/states', stateRoutes({ ModelState: dependencies.ModelState }))
     app.use('/rol', rolRoute({ ModelRol: dependencies.ModelRol }))
+    app.use('/products', routesProducts({ ModelProducts: dependencies.ModelProducts }))
 
 
     app.listen(PORT, () => {
