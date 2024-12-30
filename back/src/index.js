@@ -3,7 +3,7 @@ import { routesUser } from './routes/user.js'
 import { routesProducts } from './routes/product.js'
 import { stateRoutes } from './routes/state.js'
 import { rolRoute } from './routes/rol.js'
-import { categoryRoutes } from './routes/categoria.js'
+import { categoriaRoute } from './routes/categoria.js'
 import { clienteRoutes } from './routes/cliente.js'
 import { ordenRoutes } from './routes/orden.js'
 
@@ -39,11 +39,11 @@ const main = async (dependencies) => {
     app.use(cors())
     app.use(cookieParser())
     app.use((req, res, next) => {
-        let infoDate = req.cookies.access_user ?? null
+        let infoData = req.cookies.access_user ?? null
         req.session = null
-        if (infoDate) {
+        if (infoData) {
             try {
-                let comprobateToken = jwt.verify(infoDate, SecretePass)
+                let comprobateToken = jwt.verify(infoData, SecretePass)
                 req.session = { ...comprobateToken }
             } catch { }
         }
@@ -56,7 +56,7 @@ const main = async (dependencies) => {
     app.use('/states', stateRoutes({ ModelState: dependencies.ModelState }))
     app.use('/rol', rolRoute({ ModelRol: dependencies.ModelRol }))
     app.use('/products', routesProducts({ ModelProducts: dependencies.ModelProducts }))
-    app.use('/category', categoryRoutes({ ModelCategory: dependencies.ModelCategory }))
+    app.use('/category', categoriaRoute({ ModelCategory: dependencies.ModelCategory }))
     app.use('/cliente', clienteRoutes({ ModelCliente: dependencies.ModelCliente }))
     app.use('/orden', ordenRoutes({ ModelOrden: dependencies.ModelOrden }))
 

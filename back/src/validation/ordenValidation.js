@@ -1,12 +1,11 @@
 import { z } from 'zod'
 
 const ordenValidation = z.object({
-    id: z.number().int(),
+    id: z.number().int().optional(),
     id_usuario: z.number().int(),
-    id_estados: z.number().int(),
     nombre_completo: z.string(),
     direccion: z.string(),
-    telefono: z.string(),
+    telefono: z.string().min(8).max(12),
     correo_electronico: z.string().email(),
     fecha_entrega: z.string(),
     total_orden: z.number().positive(),
@@ -27,13 +26,13 @@ export const ordenesValidation = (data) => {
 }
 
 export const updateOrdenesValidation = (data) => {
-    return ordenValidation.partial(data).safeParse()
+    return ordenValidation.partial().safeParse(data)
 }
 
 export const updateproductos = (data) => {
-    return productosSchema.partial().safeParse(data)
+    return productosSchema.safeParse(data)
 }
 
 export const createproductos = (data) => {
-    return productosSchema.partial().safeParse(data)
+    return productosSchema.safeParse(data)
 }

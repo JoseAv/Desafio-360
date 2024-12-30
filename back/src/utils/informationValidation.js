@@ -60,7 +60,20 @@ export class MessagePersonalise {
     }
 
     static errorSession = () => {
-        return `No a iniciado secion`
+        return `No a iniciado sesion`
+    }
+
+    static idProductNotValit = (data) => {
+        let newData = data.join(', ')
+        console.log(newData)
+        return `${newData} No existe  id/s de productos`
+    }
+
+    static maxLimit = (data) => {
+
+        let newData = data.map((ele) => ele.nombre).join(', ')
+        console.log(newData)
+        return `${newData} A/An superado el stock maximo para compra`
     }
 
 }

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { OrdenControllers } from '../controllers/clientesControllers.js'
+import { OrdenControllers } from '../controllers/ordenControllers.js'
 
 
 export const ordenRoutes = ({ ModelOrden }) => {

@@ -1,29 +1,29 @@
 import { ordenesValidation, updateOrdenesValidation, updateproductos, createproductos } from '../validation/ordenValidation.js'
 import { ValidationResponse, MessagePersonalise } from '../utils/informationValidation.js'
 
-export class ClienteControllers {
-    constructor({ ModelCliente }) {
-        this.modelCliente = ModelCliente
+export class OrdenControllers {
+    constructor({ ModelOrden }) {
+        this.modelOrden = ModelOrden
     }
 
-    acctionsCliente = async (req, res) => {
-        const { acction, data, productos } = req.body
-        let resultValiaton;
+    acctionsOrden = async (req, res) => {
+        let resultData;
         let sendValidation;
-
+        let resultProductos;
+        const { acction, data, productos } = req.body
 
         if (acction === 'C') {
-            resultValiaton = createClientesValidation(data)
-            if (!resultValiaton.success) {
-                sendValidation = ValidationResponse.Denied(MessagePersonalise.DataEmpty({ message: MessagePersonalise.DataEmpty('Nombre') }))
+            resultData = ordenesValidation(data)
+            resultProductos = createproductos(productos)
+
+            if (!resultData.success || !resultProductos.success) {
+                sendValidation = ValidationResponse.Denied(MessagePersonalise.DataEmpty({ message: MessagePersonalise.DataEmpty('Datos o productos') }))
                 return res.status(sendValidation.statusCode).json({ ...sendValidation })
             }
-            sendValidation = await this.modelCliente.creatCliente({ nombre: data.nombre })
+
+            sendValidation = await this.modelOrden.createOrden({ data, productos })
             return res.status(sendValidation.statusCode).json({ ...sendValidation })
         }
-
-
-
 
 
         if (acction === 'U') {
@@ -33,7 +33,7 @@ export class ClienteControllers {
                 sendValidation = ValidationResponse.Denied({ message: MessagePersonalise.DataEmpty('ID') })
                 return res.status(sendValidation.statusCode).json({ ...sendValidation })
             }
-            sendValidation = await this.modelCliente.updateCategory({ nombre: data.nombre, id: data.id })
+            sendValidation = await this.modelOrden.updateOrden({ nombre: data.nombre, id: data.id })
             return res.status(sendValidation.statusCode).json({ ...sendValidation })
         }
     }

@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { CategoryControllers } from '../controllers/categoriaControllers'
+import { CategoryControllers } from '../controllers/categoriaControllers.js'
 
 
-export const rolRoute = ({ ModelCategory }) => {
+export const categoriaRoute = ({ ModelCategory }) => {
 
     const categoryRoutes = Router()
     const controllersCategory = new CategoryControllers({ ModelCategory })
