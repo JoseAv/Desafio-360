@@ -724,16 +724,15 @@ ORDER BY
 
 
 
-CREATE  or ALTER  PROCEDURE  sp_update_orden
+CREATE  or ALTER   PROCEDURE  sp_update_orden
 @id int,
-@id_usuario int = NULL,
+@id_usuario int,
 @id_estados int = null,
-@nombre_completo varchar(255),
-@direccion varchar(45),
-@telefono varchar(45),
-@correo_electronico varchar(255),
-@fecha_entrega date,
-@total_orden float
+@nombre_completo varchar(255) = NULL ,
+@direccion varchar(45)  = NULL,
+@telefono varchar(45)  = NULL,
+@correo_electronico varchar(255)  = NULL,
+@fecha_entrega date  = NULL
 AS
 BEGIN 
 UPDATE orden 
@@ -744,8 +743,7 @@ nombre_completo= COALESCE(@nombre_completo,nombre_completo),
 direccion= COALESCE(@direccion,direccion),
 telefono= COALESCE(@telefono,telefono),
 correo_electronico= COALESCE(@correo_electronico,correo_electronico),
-fecha_entrega= COALESCE(@fecha_entrega,fecha_entrega),
-total_orden= COALESCE(@total_orden,total_orden)
+fecha_entrega= COALESCE(@fecha_entrega,fecha_entrega)
 WHERE id = @id
 END;
 

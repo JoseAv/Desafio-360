@@ -60,9 +60,6 @@ export class ModelOrden {
                     type: sequelize.QueryTypes.SELECT,
                 }
             )
-
-            console.log(calculateProducts)
-
             // crear detalle de orden y estado y stock
             let changeStock = calculateProducts.map(async (pro) => {
                 return sequelize.query(
@@ -80,16 +77,43 @@ export class ModelOrden {
                 )
             })
             await Promise.all(changeStock)
-
             return ValidationResponse.Accepted({ message: MessagePersonalise.dataSuccessful('Orden') })
 
         } catch (error) {
             console.log(error)
             return ValidationResponse.Denied({ message: MessagePersonalise.failPeticion('Orden'), error: error })
         }
+    }
+
+    static updateOrden = async ({ data }) => {
+        console.log('Entrada datos', data)
+        try {
+
+            await sequelize.query(
+                `EXEC  sp_update_orden
+                :id, :nombre_completo,
+                :direccion, :telefono, :correo_electronico
+                `,
+                {
+                    replacements: {
+                        id: data.id ?? null,
+                        nombre_completo: data.nombre_completo ?? null,
+                        direccion: data.direccion ?? null,
+                        telefono: data.telefono ?? null,
+                        correo_electronico: data.correo_electronico ?? null,
+                    },
+                    type: sequelize.QueryTypes.SELECT
+                })
+
+            return ValidationResponse.Accepted({ message: MessagePersonalise.dataUpdateSuccessful(' Orden') })
+        } catch (error) {
+            console.log('Errores    ', error)
+            return ValidationResponse.Denied({ message: MessagePersonalise.failPeticion('Update Orden'), error: error })
+        }
 
 
     }
+
 
 }
 
