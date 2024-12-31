@@ -7,15 +7,16 @@ export class ModelOrden {
     static createOrden = async ({ data, productos }) => {
 
         try {
+            // Validaciones de si existe el id y si hay stock
             const idProducts = productos.map(p => p.id_productos)
             const productData = await sequelize.query(
                 'SELECT id, nombre, stock, precio FROM productos WHERE id IN (:ids)',
                 {
                     replacements: { ids: idProducts },
                     type: sequelize.QueryTypes.SELECT,
+
                 }
             )
-
             const idsProductData = productData.map(p => p.id)
             const existingProducts = idProducts.filter((ids) => !idsProductData.includes(ids))
             if (existingProducts.length) return ValidationResponse.Denied({ message: MessagePersonalise.idProductNotValit(existingProducts) })
@@ -36,15 +37,58 @@ export class ModelOrden {
                 return product;
             })
 
-
-
+            // crear orden para obtener el id
             const ValidateStock = calculateProducts.filter((ele) => ele.stock < 0)
             if (ValidateStock.length) return ValidationResponse.Denied({ message: MessagePersonalise.maxLimit(ValidateStock) })
-            return ValidationResponse.Accepted(MessagePersonalise.failPeticion('Orden'), error)
+
+            let totalOrden = calculateProducts.reduce((acc, pro) => acc + pro.total, 0);
+            const id_orden = await sequelize.query(
+                `EXEC sp_create_orden 
+                :id_usuario, :nombre_completo,:direccion,
+                :telefono,:correo_electronico,:fecha_entrega, 
+                :total_orden`,
+                {
+                    replacements: {
+                        id_usuario: data.id_usuario,
+                        nombre_completo: data.nombre_completo,
+                        direccion: data.direccion,
+                        telefono: data.telefono,
+                        correo_electronico: data.correo_electronico,
+                        fecha_entrega: data.fecha_entrega,
+                        total_orden: totalOrden
+                    },
+                    type: sequelize.QueryTypes.SELECT,
+                }
+            )
+
+            console.log(calculateProducts)
+
+            // crear detalle de orden y estado y stock
+            let changeStock = calculateProducts.map(async (pro) => {
+                return sequelize.query(
+                    'EXEC sp_create_detail_orden :id_orden, :id_productos, :cantidad, :precio, :subtotal',
+                    {
+                        replacements: {
+                            id_orden: id_orden[0].id_orden,
+                            id_productos: pro.id,
+                            cantidad: pro.cantidad,
+                            precio: pro.precio,
+                            subtotal: pro.total
+                        },
+                        type: sequelize.QueryTypes.SELECT,
+                    }
+                )
+            })
+            await Promise.all(changeStock)
+
+            return ValidationResponse.Accepted({ message: MessagePersonalise.dataSuccessful('Orden') })
 
         } catch (error) {
-            return ValidationResponse.Denied(MessagePersonalise.failPeticion('Orden'), error)
+            console.log(error)
+            return ValidationResponse.Denied({ message: MessagePersonalise.failPeticion('Orden'), error: error })
         }
+
+
     }
 
 }

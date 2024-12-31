@@ -260,28 +260,45 @@ GETDATE(),
 )
 END;
 
-CREATE  or ALTER  PROCEDURE  sp_create_detail_orden
-@id_orden int,
-@id_productos int,
-@cantidad int,
-@precio float,
-@subtotal float
+CREATE OR ALTER PROCEDURE sp_create_detail_orden
+    @id_orden INT,
+    @id_productos INT,
+    @cantidad INT,
+    @precio FLOAT,
+    @subtotal FLOAT
 AS
-BEGIN 
-INSERT  INTO  orden_detalles (
-id_orden,
-id_productos,
-cantidad,
-precio,
-subtotal
-)
-Values (
-@id_orden,
-@id_productos,
-@cantidad,
-@precio,
-@subtotal
-)
+BEGIN
+    BEGIN TRANSACTION;
+    BEGIN TRY
+        INSERT INTO orden_detalles (
+            id_orden,
+            id_productos,
+            cantidad,
+            precio,
+            subtotal
+        )
+        VALUES (
+            @id_orden,
+            @id_productos,
+            @cantidad,
+            @precio,
+            @subtotal
+        );
+
+        UPDATE productos
+        SET stock = stock - @cantidad
+        WHERE id = @id_productos;
+
+        UPDATE productos
+        SET id_estados = 3
+        WHERE id = @id_productos AND stock = 0;
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH;
 END;
 
 CREATE OR ALTER PROCEDURE insert_categoria_productos
