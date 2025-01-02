@@ -33,10 +33,9 @@ export class ControllersUser {
 
 
     login = async (req, res) => {
-        if (!ComprobateUser(req.body).success) return ValidationResponse.Denied({ message: MessagePersonalise.DataEmpty('Dato correcto') })
+        if (!ComprobateUser(req.body).success) return ValidationResponse.Denied({ message: MessagePersonalise.DataEmpty('Datos Incorrecto') })
         const loginUser = await this.userModel.login({ data: req.body })
         let token = jwt.sign(loginUser.dataQuery, SecretePass, { expiresIn: '1d' })
-        console.log(token)
         return res.status(loginUser.statusCode).cookie('access_user', token).json({ ...loginUser })
     }
 

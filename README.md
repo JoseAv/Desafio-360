@@ -23,7 +23,7 @@
 - [x] Intalar Multer
 - [X] usar Cloudinary
 - [X] mandar imagenes
-- [] Crear todos los endpoints
+- [X] Crear todos los endpoints
 - [x] Instalar Bcrypt
 - [x] Instalar JsonWebToken
 - [x] Proteger Rutas
@@ -34,7 +34,12 @@
 
 ## Front End
 
-- [] Iniciar Vite
+- [X] Iniciar Vite
+- [] Instalar Material
+- [] React Router
+- [] Crear Contexto
+- [] Carpeta util para llamada de datos
+- [] Funcion que llama los datos
 - [] Crear pagina Log-In
 - [] Crear El manejador de estados
 - [] Instalar Material UI
