@@ -82,8 +82,9 @@ export class ModelUsers {
     }
 
     static login = async ({ data }) => {
+        console.log(data)
         try {
-            const validateEmail = await sequelize.query("select password,id from usuarios where correo_electronico = :correo_electronico", {
+            const validateEmail = await sequelize.query("select password,id,id_rol from usuarios where correo_electronico = :correo_electronico", {
                 replacements: { correo_electronico: data.correo_electronico },
                 type: sequelize.QueryTypes.SELECT
             })
@@ -93,11 +94,10 @@ export class ModelUsers {
 
             const hashedPassword = validateEmail[0]?.password;
             const comparePassword = await bcrypt.compare(data.password, hashedPassword);
-            console.log(comparePassword)
             if (!comparePassword) return ValidationResponse.Denied(MessagePersonalise.errorPassword());
 
 
-            return ValidationResponse.Accepted({ message: MessagePersonalise.passUSer(), dataQuery: { correo_electronico: data.correo_electronico, id: validateEmail[0].id } })
+            return ValidationResponse.Accepted({ message: MessagePersonalise.passUSer(), dataQuery: { correo_electronico: data.correo_electronico, id: validateEmail[0].id, rol: validateEmail[0].id_rol } })
 
         } catch (error) {
             return ValidationResponse.Denied({ message: MessagePersonalise.failPeticion(error) })
