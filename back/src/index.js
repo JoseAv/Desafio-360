@@ -22,7 +22,7 @@ const SecretePass = 'secreto no dejarlo aqui pero es solo para hacer pruebas lue
 
 
 const app = express()
-const PORT = process.env.PORT ?? 3000
+const PORT = process.env.PORT ?? 1234
 const dependencies = {
     ModelUsers,
     ModelState,

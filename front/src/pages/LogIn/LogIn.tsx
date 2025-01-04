@@ -2,31 +2,25 @@ import { Alert, Button, Container, TextField } from "@mui/material"
 import { useForm } from "react-hook-form"
 import { callUser } from '../../utils/apis/user/authUser'
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { ResponseUser } from "../../types/user"
 
-interface ResponseUser {
-    dataQuery: user,
-    message: string,
-    statusCode: number,
-    success: boolean
-}
 
-type user = {
-    correo_electronico: string,
-    id: number,
-    rol: number
-}
 
 
 export const Login = () => {
     const [alert, setAlert] = useState(false)
+    const navigate = useNavigate()
 
     const { handleSubmit, register } = useForm()
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const onSubmit = async (data: any) => {
+
+    const onSubmit = async (data: unknown) => {
         const responseUser: ResponseUser = await callUser(data)
-        if (!responseUser.success) return setAlert(true)
         console.log(responseUser)
+        if (!responseUser.success) return setAlert(true)
         setAlert(false)
+        if (responseUser.dataQuery.rol === 1) return navigate("/operator")
+        navigate("/user")
     }
 
     return (

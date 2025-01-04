@@ -8,9 +8,10 @@ export const routesUser = ({ ModelUsers }) => {
     const userController = new ControllersUser({ ModelUsers })
 
     userRouter.post('/login', userController.login)
-    userRouter.post('/logout', userController.logout)
+    userRouter.get('/logout', userController.logout)
     userRouter.post('/register', userController.register)
     userRouter.post('/actualizar/:id', userController.updateUser)
+    userRouter.get('/session', userController.inSession)
 
     return userRouter
 

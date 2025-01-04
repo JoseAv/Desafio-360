@@ -1,5 +1,4 @@
 export const callUser = async (obj: unknown) => {
-    console.log(obj)
     try {
 
         const response = await fetch('http://localhost:3000/login', {
