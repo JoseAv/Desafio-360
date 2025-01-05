@@ -1,6 +1,7 @@
 import { intersection, z } from 'zod'
 
 const productValidation = z.object({
+    id: z.number().int().optional(),
     id_categorias: z.number().int().positive(),
     id_usuarios: z.number().int().positive(),
     nombre: z.string(),
@@ -18,6 +19,7 @@ export const createProductValidation = (data) => {
 }
 
 export const updateProductValidation = (data) => {
-    return productValidation.safeParse(data)
+    const validation = productValidation.pick({ id: true }).merge(productValidation.partial())
+    return validation.safeParse(data)
 }
 

@@ -10,8 +10,6 @@ export class ControllerProducts {
 
 
     accionProducts = async (req, res) => {
-
-
         if (!req.session) return ValidationResponse.Denied({ message: MessagePersonalise.errorSession('Dato correcto') })
 
         const data = JSON.parse(req.body.data)
@@ -41,16 +39,10 @@ export class ControllerProducts {
         }
 
         if (data.acction === 'U') {
-            if (!req.session) return ValidationResponse.Denied({ message: MessagePersonalise.errorSession('Dato correcto') })
-
-            const data = JSON.parse(req.body.data)
-            data.data.id_usuarios = req.session.id
             let newFoto
-
 
             if (req.file) {
                 try {
-
                     const uploadResult = await uploadToCloudinary(req.file.buffer);
                     newFoto = uploadResult.secure_url;
                 } catch (error) {
@@ -59,8 +51,8 @@ export class ControllerProducts {
                 }
             }
 
-
             const validationProducts = updateProductValidation(data.data);
+            console.log(validationProducts.error)
             if (!validationProducts.success) {
                 return ValidationResponse.Denied({ message: MessagePersonalise.DataEmpty('Dato correcto') });
             }
@@ -69,9 +61,6 @@ export class ControllerProducts {
                 data: { ...data.data, fotoUrl: newFoto },
             });
             return res.status(newProducts.statusCode).json({ ...newProducts });
-
-
-
         }
     }
 

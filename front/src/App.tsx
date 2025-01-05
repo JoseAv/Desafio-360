@@ -1,7 +1,8 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom"
-import { RouterLogIn } from "./Routes/logIn"
-import { RouterOperator } from "./Routes/operatorRoutes";
-
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ProtectedOperator } from "./Routes/protectedRoutes";
+import { Operator } from "./pages/operator/Operator";
+import { PagesCliente } from "./pages/operator/Cliente";
+import { Login } from "./pages/LogIn/LogIn";
 
 
 
@@ -10,13 +11,20 @@ function App() {
     <BrowserRouter>
       <Routes>
 
-        <Route path="/login/*" element={<RouterLogIn />} />
-        <Route path="/operator/*" element={<RouterOperator />} />
+        <Route path="/operator/*" element={<ProtectedOperator />}>
+          <Route path="home" element={<Operator />} />
+          <Route path="cliente" element={<PagesCliente />} />
+        </Route>
+
 
         <Route path="*" element={<h1>Página no encontrada</h1>} />
+
+        <Route path="/login" element={<Login />} />
+
+
       </Routes>
     </BrowserRouter>
   );
-};
+}
 
-export default App
+export default App;

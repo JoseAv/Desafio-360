@@ -15,9 +15,9 @@ export class ModelProducts {
             console.log(nameRepited)
             if (nameRepited.length > 0) return ValidationResponse.Denied({ message: MessagePersonalise.DataEmpty('products') })
 
-            let newresponse = await sequelize.query('exec insert_producto :id_categorias, :id_usuarios, :nombre, :marca, :codigo, :id_estados, :precio, :foto, :stock', {
+            await sequelize.query('exec insert_producto :id_categorias, :id_usuarios, :nombre, :marca, :codigo, :id_estados, :precio, :foto, :stock', {
                 replacements: {
-                    id_categorias: data.id_categorias ?? null,
+                    id_categorias: data.id_categorias,
                     id_usuarios: data.id_usuarios,
                     nombre: newNombre,
                     marca: data.marca,
@@ -42,6 +42,7 @@ export class ModelProducts {
 
     static updateProducts = async ({ data }) => {
         console.log(data)
+
         let newNombre = data.nombre.toLowerCase()
         try {
             const nameRepited = await sequelize.query('SELECT  * from productos where id =  :id', {
@@ -51,7 +52,7 @@ export class ModelProducts {
             console.log(nameRepited)
             if (!nameRepited.length > 0) return ValidationResponse.Denied({ message: MessagePersonalise.dataNotExisting('products') })
 
-            await sequelize.query('exec update_producto :id :id_categorias, :id_usuarios, :nombre, :marca, :codigo, :id_estados, :precio, :foto, :stock', {
+            await sequelize.query('exec update_producto :id, :id_categorias, :id_usuarios, :nombre, :marca, :codigo, :id_estados, :precio, :foto, :stock', {
                 replacements: {
                     id: data.id,
                     id_categorias: data.id_categorias ?? null,
@@ -67,9 +68,9 @@ export class ModelProducts {
                 type: sequelize.QueryTypes.SELECT
             })
 
-            console.log
 
-            return ValidationResponse.Accepted({ message: MessagePersonalise.dataSuccessful('producto') })
+
+            return ValidationResponse.Accepted({ message: MessagePersonalise.dataUpdateSuccessful('producto') })
 
         } catch (error) {
             return ValidationResponse.Denied({ message: MessagePersonalise.failPeticion('producto'), error: error })

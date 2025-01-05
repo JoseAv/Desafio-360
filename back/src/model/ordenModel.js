@@ -91,12 +91,13 @@ export class ModelOrden {
 
             await sequelize.query(
                 `EXEC  sp_update_orden
-                :id, :nombre_completo,
+                :id, :id_estados, :nombre_completo,
                 :direccion, :telefono, :correo_electronico
                 `,
                 {
                     replacements: {
-                        id: data.id ?? null,
+                        id: data.id,
+                        id_estados: data.id_estados ?? null,
                         nombre_completo: data.nombre_completo ?? null,
                         direccion: data.direccion ?? null,
                         telefono: data.telefono ?? null,
@@ -107,10 +108,25 @@ export class ModelOrden {
 
             return ValidationResponse.Accepted({ message: MessagePersonalise.dataUpdateSuccessful(' Orden') })
         } catch (error) {
-            console.log('Errores    ', error)
-            return ValidationResponse.Denied({ message: MessagePersonalise.failPeticion('Update Orden'), error: error })
+            return ValidationResponse.Denied({ message: MessagePersonalise.failPeticion('Error de peticion de orden'), error: error })
         }
+    }
 
+
+    static viewAllOrden = async () => {
+
+        try {
+            const ViewData = await sequelize.query(`SELECT * from orden o `, {
+                type: sequelize.QueryTypes.SELECT
+            })
+
+            console.log(ViewData)
+
+            return ValidationResponse.Accepted({ message: "Datos enviados con exito", dataQuery: ViewData })
+
+        } catch (error) {
+            return ValidationResponse.Denied({ message: MessagePersonalise.failPeticion('Error de peticion de orden'), error: error })
+        }
 
     }
 

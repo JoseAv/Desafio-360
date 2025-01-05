@@ -7,6 +7,8 @@ export class OrdenControllers {
     }
 
     acctionsOrden = async (req, res) => {
+        if (!req.session) return ValidationResponse.Denied({ message: MessagePersonalise.errorSession('Inicie Session') })
+
         let resultValiaton;
         let sendValidation;
         let resultProductos;
@@ -34,7 +36,15 @@ export class OrdenControllers {
             }
             sendValidation = await this.modelOrden.updateOrden({ data: data })
             return res.status(sendValidation.statusCode).json({ ...sendValidation })
+        }
+
+
+        if (acction === 'V') {
+            sendValidation = await this.modelOrden.viewAllOrden()
+            return res.status(sendValidation.statusCode).json({ ...sendValidation })
 
         }
+
+
     }
 }
