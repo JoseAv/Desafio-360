@@ -1,20 +1,21 @@
 import { z } from 'zod'
 
 const clientesValidation = z.object({
-    id: z.number().int(),
-    razon_Social: z.string(),
+    id: z.number().int().optional(),
+    razon_social: z.string(),
     nombre_comercial: z.string(),
-    direccion_entrega: z.string(),
+    dirrecion_entrega: z.string(),
     telefono: z.string(),
-    email: z.string().email()
+    email: z.string().email(),
+    id_estados: z.number().positive().optional()
 })
 
 export const createClientesValidation = (data) => {
-    const validation = clientesValidation.partial().extend({ email: z.string() })
-    return validation.safeParse(data)
+    return clientesValidation.safeParse(data)
 }
 
 export const updateClientesValidation = (data) => {
-    return clientesValidation.safeParse(data)
+    const validation = clientesValidation.pick({ id: true, id_estados: true }).merge(clientesValidation.partial())
+    return validation.safeParse(data)
 }
 

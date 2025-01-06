@@ -16,7 +16,6 @@ export const Operator = () => {
 
     const [order, setOrder] = useState<typeProducts[] | null>(null)
 
-
     useEffect(() => {
         async function callNewOrder() {
             try {
@@ -28,14 +27,12 @@ export const Operator = () => {
                 console.log(error)
             }
         }
-
         callNewOrder()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 
     const changeState = async (id: number) => {
-        console.log(id)
         try {
 
             const response = await fetch('http://localhost:3000/orden', {
@@ -66,12 +63,9 @@ export const Operator = () => {
                     return newData
                 })
             }
-
-
         } catch (error) {
             console.log(error)
         }
-
     }
 
 

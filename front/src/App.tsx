@@ -1,8 +1,10 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ProtectedOperator } from "./Routes/protectedRoutes";
 import { Operator } from "./pages/operator/Operator";
-import { PagesCliente } from "./pages/operator/Cliente";
 import { Login } from "./pages/LogIn/LogIn";
+import { PagesClienteCreate } from "./pages/operator/cliente/ClienteCreate";
+import { PagesClienteHome } from "./pages/operator/cliente/ClienteHome";
+import { PagesClienteEditar } from "./pages/operator/cliente/ClienteEditar";
 
 
 
@@ -13,7 +15,9 @@ function App() {
 
         <Route path="/operator/*" element={<ProtectedOperator />}>
           <Route path="home" element={<Operator />} />
-          <Route path="cliente" element={<PagesCliente />} />
+          <Route path="clientes/crear" element={<PagesClienteCreate />} />
+          <Route path="clientes" element={<PagesClienteHome />} />
+          <Route path="clientes/editar/:id" element={<PagesClienteEditar />} />
         </Route>
 
 

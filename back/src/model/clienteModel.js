@@ -5,51 +5,20 @@ import { sequelize } from '../db/sequelize.js'
 export class ModelCliente {
 
     static creatCliente = async ({ data }) => {
+        console.log('Datos inicio de clienteVF', data)
+
+
         try {
-            const nameRepited = await sequelize.query('SELECT 1 from categoria_productos r where email =  :email', {
-                replacements: { email: data, email },
-                type: Sequelize.QueryTypes.SELECT
-            })
 
-            if (nameRepited.length > 0) return ValidationResponse.Denied({ message: MessagePersonalise.DataEmpty('category') })
-
-            await sequelize.query('exec nsert_cliente  :razon_social,:nombre_comercial :direccion_entrega,:telefono,:email', {
+            await sequelize.query('exec insert_cliente  :razon_social,:nombre_comercial, :dirrecion_entrega,:telefono,:email', {
                 replacements: {
-                    razon_social: data.razon_social,
-                    nombre_comercial: data.nombre_comercial,
-                    direccion_entrega: data.direccion_entrega,
-                    telefono: data.telefono,
-                    email: data.email
-                },
-                type: sequelize.QueryTypes.SELECT
-            })
-
-            return ValidationResponse.Accepted(MessagePersonalise.dataSuccessful('Cliente'))
-
-        } catch (error) {
-            return ValidationResponse.Denied(MessagePersonalise.failPeticion('Cliente'), error)
-        }
-    }
-
-    static updateCategory = async ({ data }) => {
-        try {
-            const nameRepited = await sequelize.query('SELECT  sp_uptdate_categoria_productos from rol r where id =  :id', {
-                replacements: { id: data.id },
-                type: Sequelize.QueryTypes.SELECT
-            })
-
-            if (!nameRepited.length > 0) return ValidationResponse.Denied({ message: MessagePersonalise.dataNotExisting('Cliente') })
-
-            await sequelize.query('EXEC  sp_update_cliente :id,:razon_social,:nombre_comercial,:dirrecion_entrega,:telefono,:email', {
-                replacements: {
-                    id: data.id,
                     razon_social: data.razon_social,
                     nombre_comercial: data.nombre_comercial,
                     dirrecion_entrega: data.dirrecion_entrega,
                     telefono: data.telefono,
                     email: data.email
                 },
-                type: Sequelize.QueryTypes.SELECT
+                type: sequelize.QueryTypes.SELECT
             })
 
             return ValidationResponse.Accepted({ message: MessagePersonalise.dataSuccessful('Cliente') })
@@ -59,7 +28,40 @@ export class ModelCliente {
         }
     }
 
+    static updateCliente = async ({ data }) => {
+        try {
+            await sequelize.query('EXEC  sp_update_cliente :id,:razon_social,:nombre_comercial,:dirrecion_entrega,:telefono,:email, :id_estados', {
+                replacements: {
+                    id: data.id,
+                    razon_social: data.razon_social ?? null,
+                    nombre_comercial: data.nombre_comercial ?? null,
+                    dirrecion_entrega: data.dirrecion_entrega ?? null,
+                    telefono: data.telefono ?? null,
+                    email: data.email ?? null,
+                    id_estados: data.id_estados ?? null
+                },
+                type: Sequelize.QueryTypes.SELECT
+            })
 
+            return ValidationResponse.Accepted({ message: MessagePersonalise.dataUpdateSuccessful('Cliente') })
+
+        } catch (error) {
+            return ValidationResponse.Denied({ message: MessagePersonalise.failPeticion('Cliente'), error: error })
+        }
+    }
+
+    static viewAllClient = async () => {
+        try {
+            const newData = await sequelize.query('SELECT * from clientes c ', {
+                type: sequelize.QueryTypes.SELECT
+            })
+
+            return ValidationResponse.Accepted({ message: MessagePersonalise.dataSuccessful('Cliente'), dataQuery: newData })
+        } catch (error) {
+            return ValidationResponse.Denied({ message: MessagePersonalise.failPeticion('Cliente'), error: error })
+        }
+
+    }
 
 
 }

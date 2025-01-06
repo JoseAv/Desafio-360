@@ -2,10 +2,6 @@ import { useContext } from "react"
 import { Navigate, Outlet } from "react-router-dom"
 import { loginContext } from "../context/loginContext"
 
-
-
-
-
 export const ProtectedOperator = () => {
     const user = useContext(loginContext)
     if (user) {
@@ -21,9 +17,7 @@ export const ProtectedOperator = () => {
     }
 
     return <Outlet />
-
 }
-
 
 export const ProtectedLogin = () => {
     const user = useContext(loginContext)
@@ -35,7 +29,6 @@ export const ProtectedLogin = () => {
         if (user.user.rol === 2) return <Navigate to="/cliente" />
         if (user.user.rol === 1) return <Navigate to="/operator/home" />
     }
-
 
     return <Outlet />
 }
