@@ -19,3 +19,8 @@ export const updateClientesValidation = (data) => {
     return validation.safeParse(data)
 }
 
+export const ValidationOneClient = (data) => {
+    const validation = clientesValidation.pick({ id: true }).merge(clientesValidation.partial())
+    return validation.safeParse(data)
+}
+

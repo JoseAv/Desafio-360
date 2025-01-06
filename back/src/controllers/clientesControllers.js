@@ -1,4 +1,4 @@
-import { createClientesValidation, updateClientesValidation } from '../validation/clientesVAlidation.js'
+import { createClientesValidation, updateClientesValidation, ValidationOneClient } from '../validation/clientesVAlidation.js'
 import { ValidationResponse, MessagePersonalise } from '../utils/informationValidation.js'
 
 export class ClienteControllers {
@@ -18,12 +18,10 @@ export class ClienteControllers {
 
         if (acction === 'C') {
             resultValiaton = createClientesValidation(data)
-            console.log(resultValiaton)
             if (!resultValiaton.success) {
                 sendValidation = ValidationResponse.Denied(MessagePersonalise.DataEmpty({ message: MessagePersonalise.DataEmpty('Llene todos los datos') }))
                 return res.status(sendValidation.statusCode).json({ ...sendValidation })
             }
-            console.log(resultValiaton)
             sendValidation = await this.modelCliente.creatCliente({ data })
             console.log(sendValidation)
             return res.status(sendValidation.statusCode).json({ ...sendValidation })
@@ -31,20 +29,29 @@ export class ClienteControllers {
 
         if (acction === 'U') {
             resultValiaton = updateClientesValidation(data)
-            console.log(resultValiaton.error)
             if (!resultValiaton.success) {
                 sendValidation = ValidationResponse.Denied({ message: MessagePersonalise.DataEmpty('ID') })
                 return res.status(sendValidation.statusCode).json({ ...sendValidation })
             }
             sendValidation = await this.modelCliente.updateCliente({ data: data })
-            console.log(sendValidation)
             return res.status(sendValidation.statusCode).json({ ...sendValidation })
         }
 
-        console.log('Entrando aqui')
-        if (acction === 'V') {
 
+        if (acction === 'V') {
             sendValidation = await this.modelCliente.viewAllClient()
+            return res.status(sendValidation.statusCode).json({ ...sendValidation })
+        }
+
+
+        if (acction === 'VI') {
+            resultValiaton = ValidationOneClient(data)
+            if (!resultValiaton.success) {
+                sendValidation = ValidationResponse.Denied({ message: MessagePersonalise.DataEmpty('ID') })
+                return res.status(sendValidation.statusCode).json({ ...sendValidation })
+            }
+
+            sendValidation = await this.modelCliente.viewOneClient({ id: data.id })
             console.log(sendValidation)
             return res.status(sendValidation.statusCode).json({ ...sendValidation })
         }

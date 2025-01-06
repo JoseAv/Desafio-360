@@ -5,9 +5,6 @@ import { sequelize } from '../db/sequelize.js'
 export class ModelCliente {
 
     static creatCliente = async ({ data }) => {
-        console.log('Datos inicio de clienteVF', data)
-
-
         try {
 
             await sequelize.query('exec insert_cliente  :razon_social,:nombre_comercial, :dirrecion_entrega,:telefono,:email', {
@@ -55,6 +52,22 @@ export class ModelCliente {
             const newData = await sequelize.query('SELECT * from clientes c ', {
                 type: sequelize.QueryTypes.SELECT
             })
+
+            return ValidationResponse.Accepted({ message: MessagePersonalise.dataSuccessful('Cliente'), dataQuery: newData })
+        } catch (error) {
+            return ValidationResponse.Denied({ message: MessagePersonalise.failPeticion('Cliente'), error: error })
+        }
+
+    }
+
+    static viewOneClient = async ({ id }) => {
+        try {
+            const newData = await sequelize.query('SELECT * from clientes where id = :id ', {
+                replacements: { id: id },
+                type: sequelize.QueryTypes.SELECT
+            })
+
+            if (!newData.length) return ValidationResponse.Denied({ message: MessagePersonalise.DataEmpty('ID valido') })
 
             return ValidationResponse.Accepted({ message: MessagePersonalise.dataSuccessful('Cliente'), dataQuery: newData })
         } catch (error) {

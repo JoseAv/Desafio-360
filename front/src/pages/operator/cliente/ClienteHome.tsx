@@ -11,9 +11,11 @@ import { loginContext } from "../../../context/loginContext";
 import { StyledTableCell, StyledTableRow } from "../../../utils/styles/stylesTable";
 import { apiClient } from "../../../utils/apis/operator/clientes";
 import { Inputs } from "../../../types/operator";
+import { useNavigate } from "react-router-dom";
 
 
 export const PagesClienteHome = () => {
+    const Navigate = useNavigate()
     const [clientes, setCliente] = useState<Inputs[] | null>(null)
 
     useEffect(() => {
@@ -107,7 +109,7 @@ export const PagesClienteHome = () => {
                                 }
 
                                 </StyledTableCell>
-                                <StyledTableCell align="center"><Button color="secondary" >Actualizar</Button></StyledTableCell>
+                                <StyledTableCell align="center"><Button onClick={() => Navigate(`editar/${row.id}`)} color="secondary" >Actualizar</Button></StyledTableCell>
                             </StyledTableRow>
                         ))}
                     </TableBody>
