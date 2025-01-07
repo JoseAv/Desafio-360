@@ -8,30 +8,6 @@ export class ControllersUser {
         this.userModel = ModelUsers
     }
 
-    register = async (req, res) => {
-        if (!req.session) return ValidationResponse.Denied({ message: MessagePersonalise.errorSession('Dato correcto') })
-
-        if (!createUser(req.body).success) return ValidationResponse.Denied({ message: MessagePersonalise.DataEmpty('Dato correcto') })
-        const userCreate = await this.userModel.userCreate({ data: req.body })
-
-        return res.status(userCreate.statusCode).json({ ...userCreate })
-    }
-
-
-    updateUser = async (req, res) => {
-        if (!req.session) {
-            let ressionValidation = ValidationResponse.Denied({ message: MessagePersonalise.errorSession() })
-            return res.status(ressionValidation.statusCode).json({ ...ressionValidation })
-        }
-
-        const user = { id: req.session.id, ...req.body }
-        if (!updateUserValidation(user).success) return res.status(400).json(ValidationResponse.Denied({ message: MessagePersonalise.DataEmpty('Dato correcto') }))
-        const userCreate = await this.userModel.updateUser({ data: user })
-
-        return res.status(userCreate.statusCode).json({ ...userCreate })
-    }
-
-
     login = async (req, res) => {
 
         if (!ComprobateUser(req.body).success) return ValidationResponse.Denied({ message: MessagePersonalise.DataEmpty('Datos Incorrecto') })
@@ -63,20 +39,43 @@ export class ControllersUser {
 
 
     accionUser = async (req, res) => {
-        if (!req.session && req.session.id === 1) return ValidationResponse.Denied({ message: MessagePersonalise.errorSession('Dato correcto') })
+
+        if (!req.session) return ValidationResponse.Denied({ message: MessagePersonalise.errorSession('Dato correcto') })
+
+
         let sendValidation;
         const { acction, data } = req.body
-        console.log(acction)
+
         if (acction === "V") {
+
             sendValidation = await this.userModel.viewAllUSer()
             return res.status(sendValidation.statusCode).json({ ...sendValidation })
         }
 
         if (acction === "VI") {
+
+            if (!req.body.data || !req.body.data.id) return res.status(400).json({ message: 'Miss ID' })
             sendValidation = await this.userModel.viewOneUser({ id: data.id })
             return res.status(sendValidation.statusCode).json({ ...sendValidation })
         }
 
+        if (acction === "C") {
+
+            sendValidation = createUser(data)
+            if (!sendValidation.success) return ValidationResponse.Denied({ message: MessagePersonalise.DataEmpty('Dato correcto') })
+            const userCreate = await this.userModel.userCreate({ data: data })
+
+            return res.status(userCreate.statusCode).json({ ...userCreate })
+        }
+
+        if (acction === "U") {
+
+            const user = { id: req.session.id, ...req.body }
+            if (!updateUserValidation(user).success) return res.status(400).json(ValidationResponse.Denied({ message: MessagePersonalise.DataEmpty('Dato correcto') }))
+
+            const userCreate = await this.userModel.updateUser({ data: user })
+            return res.status(userCreate.statusCode).json({ ...userCreate })
+        }
 
 
     }

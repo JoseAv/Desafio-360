@@ -30,6 +30,11 @@ type typesObjectCliente = {
     data: Inputs
 }
 
+interface typeClienteUser {
+    id: number
+    nombre_comercial: string
+}
+
 // Categorias 
 
 type typesObjectCliente = {
@@ -47,5 +52,36 @@ type Category = {
 
 type CategoryForm = {
     id?: number
+    nombre: string
+}
+
+
+// Usuarios manejo Operador
+
+interface typeUserApi {
+    id?: number
+    correo_electronico: string
+    nombre_completo: string
+    telefono: string
+    id_estados?: number
+    nombre_comercial?: string
+    razon_social?: string
+
+}
+
+interface typeUserForm {
+    id?: number
+    id_rol: number
+    id_estados: number
+    id_clientes: number
+    correo_electronico: string
+    nombre_completo: string
+    password: string
+    telefono: string
+    fecha_nacimiento: string
+}
+
+interface typeRol {
+    id: number
     nombre: string
 }

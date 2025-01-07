@@ -63,6 +63,10 @@ export class MessagePersonalise {
         return `No a iniciado sesion`
     }
 
+    static SuccesMessage = () => {
+        return 'Informacion enviada con exito'
+    }
+
     static idProductNotValit = (data) => {
         let newData = data.join(', ')
         console.log(newData)

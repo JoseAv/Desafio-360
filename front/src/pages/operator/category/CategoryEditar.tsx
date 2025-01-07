@@ -14,7 +14,6 @@ export const PagesCategoryEditar = () => {
 
     useEffect(() => {
         const newCategory = async () => {
-            console.log('Id', id)
             const obj = {
                 "acction": "VI",
                 "data": {
@@ -22,7 +21,6 @@ export const PagesCategoryEditar = () => {
                 }
             }
             const response = await apiCategory(obj)
-            console.log(response)
             if (response && response.success && !category) {
                 setCategory(response.dataQuery)
             }
