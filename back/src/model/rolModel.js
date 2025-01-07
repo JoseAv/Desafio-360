@@ -55,6 +55,24 @@ export class ModelRol {
     }
 
 
+    static viewAllRol = async () => {
+        try {
+
+            const rol = await sequelize.query('select * from rol', {
+                type: Sequelize.QueryTypes.SELECT
+            })
+            console.log(rol)
+
+            return ValidationResponse.Accepted({ message: MessagePersonalise.dataSuccessful('Rol'), dataQuery: rol })
+        } catch (error) {
+            return ValidationResponse.Denied({ message: MessagePersonalise.failPeticion('Rol'), error: error })
+        }
+
+
+
+    }
+
+
 
 
 }

@@ -14,8 +14,9 @@ export class CategoryControllers {
         let sendValidation;
 
         if (acction === 'C') {
+            data.id_usuario = req.session.id ?? null
             resultValiaton = createcategoryValidation(data)
-
+            console.log(resultValiaton)
             if (!resultValiaton.success) {
                 sendValidation = ValidationResponse.Denied(MessagePersonalise.DataEmpty({ message: MessagePersonalise.DataEmpty('Nombre') }))
                 return res.status(sendValidation.statusCode).json({ ...sendValidation })
@@ -34,7 +35,21 @@ export class CategoryControllers {
             return res.status(sendValidation.statusCode).json({ ...sendValidation })
         }
 
+        if (acction === "V") {
 
+            sendValidation = await this.modelCategory.viewCategory()
+            return res.status(sendValidation.statusCode).json({ ...sendValidation })
+        }
+
+        if (acction === "VI") {
+            if (!data.id) {
+                sendValidation = ValidationResponse.Denied(MessagePersonalise.DataEmpty({ message: MessagePersonalise.DataEmpty('ID') }))
+                return res.status(sendValidation.statusCode).json({ ...sendValidation })
+            }
+
+            sendValidation = await this.modelCategory.viewOneCategory({ id: data.id })
+            return res.status(sendValidation.statusCode).json({ ...sendValidation })
+        }
 
 
 

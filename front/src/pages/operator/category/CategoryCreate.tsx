@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import { loginContext } from "../../../context/loginContext";
-import { FormClientes } from "../../../components/operatorComponents/clientes/Form";
+import { FormCategorias } from "../../../components/operatorComponents/categorias/FormCategory";
 
-export const PagesClienteCreate = () => {
+export const PagesCategoriasCreate = () => {
 
     const context = useContext(loginContext)
     if (!context) return <h1>Error: Contexto no disponible</h1>;
@@ -15,7 +15,7 @@ export const PagesClienteCreate = () => {
     return (
 
 
-        <FormClientes isEdit={false} />
+        <FormCategorias isEdit={false} />
 
     )
 

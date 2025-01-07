@@ -30,3 +30,22 @@ type typesObjectCliente = {
     data: Inputs
 }
 
+// Categorias 
+
+type typesObjectCliente = {
+    acction: string,
+    data: Category
+}
+
+type Category = {
+    id: number,
+    id_usuario: number,
+    nombre: string,
+    id_estados: number,
+    fecha_creacion: string
+}
+
+type CategoryForm = {
+    id?: number
+    nombre: string
+}

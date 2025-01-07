@@ -5,7 +5,7 @@ import { sequelize } from '../db/sequelize.js'
 export class ModelCategory {
 
     static creatCategory = async ({ data }) => {
-        let newNombre = data.nombre.toLowerCase()
+        let newNombre = data.nombre?.toLowerCase() ?? null
         console.log(data)
 
         try {
@@ -34,8 +34,7 @@ export class ModelCategory {
     }
 
     static updateCategory = async ({ data }) => {
-        let newNombre = data.nombre.toLowerCase()
-        console.log(newNombre)
+        let newNombre = data.nombre?.toLowerCase() ?? null
         try {
             const nameRepited = await sequelize.query('SELECT  1 from categoria_productos r where id =  :id', {
                 replacements: { id: data.id },
@@ -62,6 +61,34 @@ export class ModelCategory {
     }
 
 
+    static viewCategory = async () => {
+        try {
+            const categoria = await sequelize.query('select * from categoria_productos cp ')
+            console.log(categoria)
+            return ValidationResponse.Accepted({ message: MessagePersonalise.dataSuccessful('category'), dataQuery: categoria[0] })
+        } catch (error) {
+            return ValidationResponse.Denied({ message: MessagePersonalise.failPeticion('category'), error: error })
+        }
+
+
+    }
+
+
+    static viewOneCategory = async ({ id }) => {
+
+        try {
+            const categoria = await sequelize.query('select * from categoria_productos cp where id = :id', {
+                replacements: { id: id },
+                type: sequelize.QueryTypes.SELECT
+            })
+
+            return ValidationResponse.Accepted({ message: MessagePersonalise.dataSuccessful('category'), dataQuery: categoria[0] })
+        } catch (error) {
+            return ValidationResponse.Denied({ message: MessagePersonalise.failPeticion('category'), error: error })
+        }
+
+
+    }
 
 
 }

@@ -24,7 +24,7 @@ export class ControllersUser {
             return res.status(ressionValidation.statusCode).json({ ...ressionValidation })
         }
 
-        const user = { id: Number(req.params.id), ...req.body }
+        const user = { id: req.session.id, ...req.body }
         if (!updateUserValidation(user).success) return res.status(400).json(ValidationResponse.Denied({ message: MessagePersonalise.DataEmpty('Dato correcto') }))
         const userCreate = await this.userModel.updateUser({ data: user })
 
@@ -57,9 +57,28 @@ export class ControllersUser {
 
 
     logout = async (req, res) => {
-        console.log(req.session)
         res.clearCookie('access_user')
         res.status(200).json({ message: 'Cierre de sesion completado', success: true })
+    }
+
+
+    accionUser = async (req, res) => {
+        if (!req.session && req.session.id === 1) return ValidationResponse.Denied({ message: MessagePersonalise.errorSession('Dato correcto') })
+        let sendValidation;
+        const { acction, data } = req.body
+        console.log(acction)
+        if (acction === "V") {
+            sendValidation = await this.userModel.viewAllUSer()
+            return res.status(sendValidation.statusCode).json({ ...sendValidation })
+        }
+
+        if (acction === "VI") {
+            sendValidation = await this.userModel.viewOneUser({ id: data.id })
+            return res.status(sendValidation.statusCode).json({ ...sendValidation })
+        }
+
+
+
     }
 
 }

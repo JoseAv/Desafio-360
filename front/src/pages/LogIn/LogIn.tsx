@@ -19,7 +19,7 @@ export const Login = () => {
         console.log(responseUser)
         if (!responseUser.success) return setAlert(true)
         setAlert(false)
-        if (responseUser.dataQuery.rol === 1) return navigate("/operator")
+        if (responseUser.dataQuery.rol === 1) return navigate("/operator/home")
         navigate("/user")
     }
 

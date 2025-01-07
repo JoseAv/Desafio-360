@@ -13,6 +13,7 @@ export class rolControllers {
 
 
         if (acction === 'C') {
+            if (!req.session && req.session.id === 1) return ValidationResponse.Denied({ message: MessagePersonalise.errorSession('Dato correcto') })
             resultValiaton = createRolValidation(data)
             if (!resultValiaton.success) {
                 sendValidation = ValidationResponse.Denied(MessagePersonalise.DataEmpty({ message: MessagePersonalise.DataEmpty('Nombre') }))
@@ -25,6 +26,7 @@ export class rolControllers {
 
 
         if (acction === 'U') {
+            if (!req.session && req.session.id === 1) return ValidationResponse.Denied({ message: MessagePersonalise.errorSession('Dato correcto') })
             resultValiaton = updateRolValidation(data)
             console.log(resultValiaton)
             if (!resultValiaton.success) {
@@ -37,9 +39,11 @@ export class rolControllers {
         }
 
 
-
-
-
-
+        if (acction === 'V') {
+            if (!req.session && req.session.id === 1) return ValidationResponse.Denied({ message: MessagePersonalise.errorSession('Dato correcto') })
+            console.log("Entrada aqui")
+            sendValidation = await this.modelRol.viewAllRol()
+            return res.status(sendValidation.statusCode).json({ ...sendValidation })
+        }
     }
 }

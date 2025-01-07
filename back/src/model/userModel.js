@@ -81,7 +81,6 @@ export class ModelUsers {
     }
 
     static login = async ({ data }) => {
-        console.log(data)
         try {
             const validateEmail = await sequelize.query("select password,id,id_rol,id_estados from usuarios where correo_electronico = :correo_electronico", {
                 replacements: { correo_electronico: data.correo_electronico },
@@ -102,6 +101,37 @@ export class ModelUsers {
             return ValidationResponse.Denied({ message: MessagePersonalise.failPeticion(error) })
         }
 
+    }
+
+
+    static viewAllUSer = async () => {
+        try {
+            const user = await sequelize.query(`SELECT * from usuarios u`, {
+                type: sequelize.QueryTypes.SELECT
+            })
+            console.log(user)
+            return ValidationResponse.Denied({ message: MessagePersonalise.failPeticion(error), dataQuery: user })
+
+        } catch (error) {
+            return ValidationResponse.Denied({ message: MessagePersonalise.failPeticion(error), error: error })
+
+        }
+    }
+
+
+    static viewOneUser = async ({ id }) => {
+        try {
+            const user = await sequelize.query(`SELECT * from usuarios u where id = :id`, {
+                replacements: { id: id },
+                type: sequelize.QueryTypes.SELECT
+            })
+            console.log(user)
+            return ValidationResponse.Denied({ message: MessagePersonalise.failPeticion(error), dataQuery: user })
+
+        } catch (error) {
+            return ValidationResponse.Denied({ message: MessagePersonalise.failPeticion(error), error: error })
+
+        }
     }
 
 }
