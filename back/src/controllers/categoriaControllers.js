@@ -12,16 +12,16 @@ export class CategoryControllers {
         const { acction, data } = req.body
         let resultValiaton;
         let sendValidation;
-
+        let newData = { ...data, id_usuario: req.session.id }
         if (acction === 'C') {
-            data.id_usuario = req.session.id ?? null
-            resultValiaton = createcategoryValidation(data)
-            console.log(resultValiaton)
+            data.id_usuario = req.session.id
+            resultValiaton = createcategoryValidation(newData)
             if (!resultValiaton.success) {
                 sendValidation = ValidationResponse.Denied(MessagePersonalise.DataEmpty({ message: MessagePersonalise.DataEmpty('Nombre') }))
                 return res.status(sendValidation.statusCode).json({ ...sendValidation })
             }
-            sendValidation = await this.modelCategory.creatCategory({ data: data })
+
+            sendValidation = await this.modelCategory.creatCategory({ data: newData })
             return res.status(sendValidation.statusCode).json({ ...sendValidation })
         }
 

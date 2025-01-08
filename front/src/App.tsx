@@ -11,6 +11,9 @@ import { PagesCategoryEditar } from "./pages/operator/category/CategoryEditar";
 import { PagesUserCreate } from "./pages/user/userCreate";
 import { PagesUserEditar } from "./pages/user/userEditar";
 import { PagesUserHome } from "./pages/user/userHome";
+import { PagesProductosCreate } from "./pages/productos/productosCreate";
+import { PagesProductosHome } from "./pages/productos/ProductosHome";
+import { PagesProductosEditar } from "./pages/productos/productosEditar";
 
 
 
@@ -33,6 +36,10 @@ function App() {
           <Route path="usuarios/crear" element={<PagesUserCreate />} />
           <Route path="usuarios" element={<PagesUserHome />} />
           <Route path="usuarios/editar/:id" element={<PagesUserEditar />} />
+
+          <Route path="productos/crear" element={<PagesProductosCreate />} />
+          <Route path="productos" element={<PagesProductosHome />} />
+          <Route path="productos/editar/:id" element={<PagesProductosEditar />} />
 
         </Route>
 

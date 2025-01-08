@@ -85,3 +85,23 @@ interface typeRol {
     id: number
     nombre: string
 }
+
+// Productos
+
+
+interface typeProductsApi {
+    id?: number
+    id_categorias: number
+    id_usuarios?: number
+    id_estados?: number
+    nombre: string
+    marca: number
+    codigo: string
+    precio: number
+    fecha_creacion: string
+    stock: number
+    foto: string
+    quantity?: number
+    total?: number
+}
+

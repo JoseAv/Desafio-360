@@ -2,8 +2,8 @@ import { Button, Container, TextField } from "@mui/material"
 import React, { useEffect } from "react"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { CategoryForm } from "../../../types/operator"
-import { apiClient } from "../../../utils/apis/operator/clientes"
 import { useNavigate } from "react-router-dom"
+import { apiCategory } from "../../../utils/apis/operator/category"
 
 interface typeFormClientes {
     isEdit: boolean
@@ -31,9 +31,8 @@ export const FormCategorias: React.FC<typeFormClientes> = ({ isEdit = false, cat
             acction: isEdit ? 'U' : 'C',
             data: data
         }
-        console.log(obj)
 
-        const responseValidation = await apiClient(obj)
+        const responseValidation = await apiCategory(obj)
         if (!responseValidation.success) {
             return
         }
