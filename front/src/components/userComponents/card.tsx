@@ -25,7 +25,9 @@ export const PagesCard: React.FC<typeProducts> = ({ product = null }) => {
                         width: '100%',
                         objectFit: 'cover',
                     }}
-                    image={product?.foto ?? 'nada'}
+                    component={'img'}
+                    alt="Imagen de la tarjeta"
+                    image={product?.foto ?? '/'}
                     title="green iguana"
                 />
                 <CardContent>

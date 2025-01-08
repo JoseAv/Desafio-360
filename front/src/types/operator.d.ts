@@ -101,7 +101,7 @@ interface typeProductsApi {
     fecha_creacion: string
     stock: number
     foto: string
-    quantity?: number
+    cantidad?: number
     total?: number
 
 }

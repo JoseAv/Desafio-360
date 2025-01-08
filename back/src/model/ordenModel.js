@@ -21,7 +21,6 @@ export class ModelOrden {
             const existingProducts = idProducts.filter((ids) => !idsProductData.includes(ids))
             if (existingProducts.length) return ValidationResponse.Denied({ message: MessagePersonalise.idProductNotValit(existingProducts) })
 
-
             const calculateProducts = productData.map((product) => {
                 const stockInfo = productos.find(stock => stock.id_productos === product.id);
                 if (stockInfo) {
@@ -41,7 +40,7 @@ export class ModelOrden {
             const ValidateStock = calculateProducts.filter((ele) => ele.stock < 0)
             if (ValidateStock.length) return ValidationResponse.Denied({ message: MessagePersonalise.maxLimit(ValidateStock) })
 
-            let totalOrden = calculateProducts.reduce((acc, pro) => acc + pro.total, 0);
+            let totalOrden = calculateProducts.reduce((acc, pro) => acc + Number(pro.total), 0);
             const id_orden = await sequelize.query(
                 `EXEC sp_create_orden 
                 :id_usuario, :nombre_completo,:direccion,
@@ -77,6 +76,8 @@ export class ModelOrden {
                 )
             })
             await Promise.all(changeStock)
+            console.log('llega aqui')
+
             return ValidationResponse.Accepted({ message: MessagePersonalise.dataSuccessful('Orden') })
 
         } catch (error) {

@@ -3,6 +3,7 @@ import { PagesCard } from "../../components/userComponents/card"
 import { useContext } from "react"
 import { ShopingContext } from "../../context/shopingCardContext"
 import { typeProductsApi } from "../../types/operator"
+import ShoppingCar from "../../components/userComponents/shopingCart"
 
 
 export const PagesClienteUser = () => {
@@ -19,14 +20,15 @@ export const PagesClienteUser = () => {
 
     return (
         <>
+
+
             <Container sx={{ display: 'flex', flexWrap: 'wrap', maxWidth: '1200px', gap: '30px', marginTop: '100px' }}>
                 {products.map((pro: typeProductsApi) => (
-                    <PagesCard product={pro} />
+                    <PagesCard product={pro} key={pro.id} />
 
                 ))}
-
-
             </Container>
+            <ShoppingCar />
 
         </>
 

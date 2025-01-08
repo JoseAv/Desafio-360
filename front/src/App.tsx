@@ -16,6 +16,8 @@ import { PagesProductosCreate } from "./pages/productos/productosCreate";
 import { PagesProductosHome } from "./pages/productos/ProductosHome";
 import { PagesProductosEditar } from "./pages/productos/productosEditar";
 import { PagesClienteUser } from "./pages/clienteHome/ClienteHome";
+import { PagePay } from "./pages/clienteHome/shop";
+import { OrdenDetails } from "./pages/clienteHome/detallesOrden";
 
 
 
@@ -48,6 +50,8 @@ function App() {
 
         <Route path="/cliente/*" element={<ProtectedCliente />}>
           <Route path="home" element={<PagesClienteUser />} />
+          <Route path="pay" element={<PagePay />} />
+          <Route path="detalles" element={<OrdenDetails />} />
         </Route>
 
 

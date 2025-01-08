@@ -13,17 +13,18 @@ export class OrdenControllers {
         let sendValidation;
         let resultProductos;
         const { acction, data, productos } = req.body
-
+        data.id_usuario = req.session.id
         if (acction === 'C') {
+
             resultValiaton = ordenesValidation(data)
             resultProductos = createproductos(productos)
-
-            if (!resultValiaton.success || !resultProductos.success) {
+            if (!resultValiaton.success) {
                 sendValidation = ValidationResponse.Denied({ message: MessagePersonalise.DataEmpty('Datos o productos') })
                 return res.status(sendValidation.statusCode).json({ ...sendValidation })
             }
 
             sendValidation = await this.modelOrden.createOrden({ data, productos })
+            console.log(sendValidation)
             return res.status(sendValidation.statusCode).json({ ...sendValidation })
         }
 

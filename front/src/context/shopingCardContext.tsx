@@ -18,6 +18,9 @@ interface ShopingValues {
     productsInCart: typeProductsApi[] | null
     minProducts: (product: typeProductsApi) => void
     resetCart: () => void
+    openShop: () => void
+    closeShop: boolean
+    TotalCard: () => number
 }
 
 
@@ -26,7 +29,28 @@ export const Shoping: React.FC<ShopingTypes> = ({ children }) => {
     const [productsInCart, setProductsInCart] = useState<typeProductsApi[] | null>([])
     const [loading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<string | null>(null)
+    const [closeShop, setCloseShop] = useState<boolean>(false)
 
+
+    function openShop() {
+        setCloseShop((prev) => {
+            return !prev
+        })
+    }
+
+
+    function TotalCard() {
+        let total = 0
+        if (!productsInCart?.length) return total
+
+        productsInCart.forEach((ele: typeProductsApi) => {
+            if (ele.total) {
+                total += Number(ele.total)
+            }
+        })
+        return total
+
+    }
 
     const callProducts = useCallback(async () => {
         if (products) return;
@@ -36,8 +60,11 @@ export const Shoping: React.FC<ShopingTypes> = ({ children }) => {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const changeProducts = newProducst.dataQuery.map((ele: any) => ({
                 ...ele,
-                quantity: 1,
-                total: ele.precio
+                cantidad: 1,
+                total: ele.precio,
+                subtotal: 0,
+                id_productos: ele.id
+
             }))
             setProducts(changeProducts);
         } catch (error) {
@@ -68,9 +95,9 @@ export const Shoping: React.FC<ShopingTypes> = ({ children }) => {
             setProductsInCart((prev) => {
                 if (!prev) return [product]
                 const newPrev = [...prev]
-                if (newPrev[indexProducts].quantity) {
-                    newPrev[indexProducts].quantity += 1;
-                    newPrev[indexProducts].total = newPrev[indexProducts].quantity * newPrev[indexProducts].precio;
+                if (newPrev[indexProducts].cantidad) {
+                    newPrev[indexProducts].cantidad += 1;
+                    newPrev[indexProducts].total = newPrev[indexProducts].cantidad * newPrev[indexProducts].precio;
                 }
 
                 return newPrev;
@@ -85,7 +112,7 @@ export const Shoping: React.FC<ShopingTypes> = ({ children }) => {
         const indexProducts = productsInCart.findIndex((ele: typeProductsApi) => ele.id === product.id)
         if (indexProducts === -1) return
 
-        if (productsInCart[indexProducts].quantity === 1) {
+        if (productsInCart[indexProducts].cantidad === 1) {
             const newProducts = productsInCart.filter(product => product.id !== productsInCart[indexProducts].id);
             setProductsInCart(newProducts)
             return
@@ -93,9 +120,9 @@ export const Shoping: React.FC<ShopingTypes> = ({ children }) => {
         setProductsInCart((prev) => {
             if (!prev) return [product]
             const newPrev = [...prev]
-            if (newPrev[indexProducts].quantity) {
-                newPrev[indexProducts].quantity -= 1;
-                newPrev[indexProducts].total = newPrev[indexProducts].quantity * newPrev[indexProducts].precio;
+            if (newPrev[indexProducts].cantidad) {
+                newPrev[indexProducts].cantidad -= 1;
+                newPrev[indexProducts].total = newPrev[indexProducts].cantidad * newPrev[indexProducts].precio;
             }
             return newPrev;
         });
@@ -117,7 +144,12 @@ export const Shoping: React.FC<ShopingTypes> = ({ children }) => {
                 AddProduct,
                 productsInCart,
                 minProducts,
-                resetCart
+                resetCart,
+                openShop,
+                closeShop,
+                TotalCard
+
+
             }}>
             {children}
         </ShopingContext.Provider>
