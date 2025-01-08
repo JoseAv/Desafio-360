@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { ProtectedOperator } from "./Routes/protectedRoutes";
+import { ProtectedCliente, ProtectedOperator } from "./Routes/protectedRoutes";
+//Opertador
 import { Operator } from "./pages/operator/Operator";
 import { Login } from "./pages/LogIn/LogIn";
 import { PagesClienteCreate } from "./pages/operator/cliente/ClienteCreate";
@@ -14,6 +15,7 @@ import { PagesUserHome } from "./pages/user/userHome";
 import { PagesProductosCreate } from "./pages/productos/productosCreate";
 import { PagesProductosHome } from "./pages/productos/ProductosHome";
 import { PagesProductosEditar } from "./pages/productos/productosEditar";
+import { PagesClienteUser } from "./pages/clienteHome/ClienteHome";
 
 
 
@@ -42,6 +44,12 @@ function App() {
           <Route path="productos/editar/:id" element={<PagesProductosEditar />} />
 
         </Route>
+
+
+        <Route path="/cliente/*" element={<ProtectedCliente />}>
+          <Route path="home" element={<PagesClienteUser />} />
+        </Route>
+
 
 
         <Route path="*" element={<h1>Página no encontrada</h1>} />

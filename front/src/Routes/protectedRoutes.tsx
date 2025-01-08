@@ -19,6 +19,17 @@ export const ProtectedOperator = () => {
     return <Outlet />
 }
 
+export const ProtectedCliente = () => {
+    const user = useContext(loginContext)
+    if (user) {
+        user.loginUser()
+    }
+    if (user?.loading) return <h1>Cargando...</h1>;
+
+    if (!user || !user.user || !user.user.id) return <Navigate to="/login" />
+    return <Outlet />
+}
+
 export const ProtectedLogin = () => {
     const user = useContext(loginContext)
     if (user) {

@@ -1,9 +1,10 @@
 import { Alert, Button, Container, TextField } from "@mui/material"
 import { useForm } from "react-hook-form"
 import { callUser } from '../../utils/apis/user/authUser'
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { ResponseUser } from "../../types/user"
+import { loginContext } from "../../context/loginContext"
 
 
 
@@ -13,6 +14,9 @@ export const Login = () => {
     const navigate = useNavigate()
 
     const { handleSubmit, register } = useForm()
+    const context = useContext(loginContext)
+    if (!context) return <h1>Error: Contexto no disponible</h1>
+
 
     const onSubmit = async (data: unknown) => {
         const responseUser: ResponseUser = await callUser(data)
@@ -20,7 +24,7 @@ export const Login = () => {
         if (!responseUser.success) return setAlert(true)
         setAlert(false)
         if (responseUser.dataQuery.rol === 1) return navigate("/operator/home")
-        navigate("/user")
+        navigate("/cliente/home")
     }
 
     return (

@@ -8,13 +8,16 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { LoginProvider } from './context/loginContext.tsx';
+import { Shoping } from './context/shopingCardContext.tsx';
 
 
 
 createRoot(document.getElementById('root')!).render(
   <LoginProvider>
-    <StrictMode>
-      <App />
-    </StrictMode>
+    <Shoping>
+      <StrictMode>
+        <App />
+      </StrictMode>
+    </Shoping>
   </LoginProvider>
 )

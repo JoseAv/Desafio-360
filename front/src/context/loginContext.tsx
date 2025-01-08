@@ -36,10 +36,9 @@ export const LoginProvider: React.FC<typeLoginContext> = ({ children }) => {
     </loginContext.Provider>
 
     )
-
 }
 
-async function inSession() {
+export async function inSession() {
     try {
         const response = await fetch('http://localhost:3000/session', {
             credentials: 'include'
@@ -48,5 +47,4 @@ async function inSession() {
     } catch (error) {
         console.log(error)
     }
-
 }

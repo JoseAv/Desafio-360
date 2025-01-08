@@ -103,5 +103,6 @@ interface typeProductsApi {
     foto: string
     quantity?: number
     total?: number
+
 }
 
