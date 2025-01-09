@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { loginContext } from "../../../context/loginContext";
 import { FormClientes } from "../../../components/operatorComponents/clientes/Form";
+import NavBarOperator from "../../../components/common/navigateOperator";
 
 export const PagesClienteCreate = () => {
 
@@ -14,8 +15,10 @@ export const PagesClienteCreate = () => {
 
     return (
 
-
-        <FormClientes isEdit={false} />
+        <>
+            <NavBarOperator />
+            <FormClientes isEdit={false} />
+        </>
 
     )
 

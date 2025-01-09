@@ -134,7 +134,7 @@ export const FormProductos: React.FC<typeFormProductos> = ({ isEdit = false, pro
 
 
                     <Button type="submit" variant="contained" sx={{ width: '400px' }}>
-                        {isEdit ? 'Editar cliente' : 'Crear cliente'}
+                        {isEdit ? 'Editar Producto' : 'Crear Producto'}
                     </Button>
 
                 </Container>

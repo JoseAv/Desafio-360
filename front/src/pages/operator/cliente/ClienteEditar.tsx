@@ -4,6 +4,7 @@ import { FormClientes } from "../../../components/operatorComponents/clientes/Fo
 import { useParams } from "react-router-dom";
 import { Inputs } from "../../../types/operator";
 import { apiClient } from "../../../utils/apis/operator/clientes";
+import NavBarOperator from "../../../components/common/navigateOperator";
 
 export const PagesClienteEditar = () => {
     const [client, setClient] = useState<Inputs | null>(null)
@@ -42,7 +43,11 @@ export const PagesClienteEditar = () => {
 
 
     return (
-        <FormClientes isEdit={true} cliente={client} />
+
+        <>
+            <NavBarOperator />
+            <FormClientes isEdit={true} cliente={client} />
+        </>
     )
 
 }

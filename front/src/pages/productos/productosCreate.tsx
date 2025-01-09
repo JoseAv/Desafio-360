@@ -3,6 +3,7 @@ import { loginContext } from "../../context/loginContext";
 import { CategoryForm } from "../../types/operator";
 import { FormProductos } from "../../components/operatorComponents/productos/productos";
 import { apiCategory } from "../../utils/apis/operator/category";
+import NavBarOperator from "../../components/common/navigateOperator";
 
 
 export const PagesProductosCreate = () => {
@@ -34,8 +35,10 @@ export const PagesProductosCreate = () => {
     if (!categorias) return <h1>No hay Categorias</h1>
     return (
 
-
-        <FormProductos isEdit={false} categorias={categorias} />
+        <>
+            <NavBarOperator />
+            <FormProductos isEdit={false} categorias={categorias} />
+        </>
 
     )
 

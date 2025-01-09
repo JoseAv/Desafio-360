@@ -59,7 +59,7 @@ export const FormUsuarios: React.FC<typeFormClientes> = ({ isEdit = false, usuar
                         sx={{ width: '400px' }}
                         {...register("nombre_completo", { required: true })} />
 
-                    <Container sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '40px' }}>
+                    <Container sx={{ display: 'flex', justifyContent: 'Center', alignItems: 'center', gap: '40px' }}>
 
                         <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
                             <InputLabel id="demo-simple-select-label-Rol">Rol</InputLabel>

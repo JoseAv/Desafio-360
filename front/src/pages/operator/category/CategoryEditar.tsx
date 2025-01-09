@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { Category } from "../../../types/operator";
 import { FormCategorias } from "../../../components/operatorComponents/categorias/FormCategory";
 import { apiCategory } from "../../../utils/apis/operator/category";
+import NavBarOperator from "../../../components/common/navigateOperator";
 
 export const PagesCategoryEditar = () => {
     const [category, setCategory] = useState<Category | null>(null)
@@ -42,7 +43,10 @@ export const PagesCategoryEditar = () => {
 
 
     return (
-        <FormCategorias isEdit={true} category={category} />
+        <>
+            <NavBarOperator />
+            <FormCategorias isEdit={true} category={category} />
+        </>
     )
 
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useContext } from "react";
 import { loginContext } from "../../context/loginContext";
 import { apiProducts, useProducts } from "../../utils/apis/shared/productos";
@@ -5,7 +6,8 @@ import { Button, Container, Paper, Table, TableBody, TableContainer, TableHead, 
 import { StyledTableCell, StyledTableRow } from "../../utils/styles/stylesTable";
 import { useNavigate } from "react-router-dom";
 import { typeProductsApi } from "../../types/operator";
-
+import NavBarOperator from "../../components/common/navigateOperator";
+import AddSharpIcon from '@mui/icons-material/AddSharp';
 
 export const PagesProductosHome = () => {
 
@@ -24,6 +26,9 @@ export const PagesProductosHome = () => {
     if (loading) return <h1>Cargando...</h1>;
     if (!user) return <h1>No Permitido</h1>
     if (!products) return <h1>Sin Productos</h1>
+    if (!Array.isArray(products) || products.length === 0) {
+        return <h1>Sin Productos</h1>
+    }
     if (loadingProducts) return <h1>Cargando Productos</h1>
     if (errorProducts) return <h1>Ah ocurrido un error</h1>
     const changeState = async (id: number, id_estados: number) => {
@@ -39,8 +44,8 @@ export const PagesProductosHome = () => {
         try {
             const newResponse = await apiProducts(obj)
             if (newResponse.success) {
-                setProducts(prevData => {
-                    if (!prevData) return prevData
+                setProducts((prevData: any) => {
+                    if (!prevData) return [prevData]
                     const indexPrev = prevData?.findIndex((o: typeProductsApi) => o.id === id)
                     if (indexPrev === -1) return prevData
                     const newData = [...prevData]
@@ -58,46 +63,54 @@ export const PagesProductosHome = () => {
     console.log(products)
 
     return (
+        <>
+            <NavBarOperator />
 
-        <Container sx={{ marginTop: "120px", width: "100%" }}>
-            <h1>Productos</h1>
-            <TableContainer component={Paper}>
-                <Table sx={{ width: "1100px" }} aria-label="customized table">
-                    <TableHead>
-                        <TableRow>
-                            <StyledTableCell align="center">Nombre </StyledTableCell>
-                            <StyledTableCell align="center">Marca</StyledTableCell>
-                            <StyledTableCell align="center">Precio Q</StyledTableCell>
-                            <StyledTableCell align="center">Stock</StyledTableCell>
-                            <StyledTableCell align="center">Foto</StyledTableCell>
-                            <StyledTableCell align="center">Estado</StyledTableCell>
-                            <StyledTableCell align="center">Actualizar</StyledTableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {products.map((row) => (
-                            <StyledTableRow key={row.id}>
-                                <StyledTableCell component="th" scope="row" align="center"> <p className="textTable">{row.nombre}</p></StyledTableCell>
-                                <StyledTableCell align="center"><p className="textTable">{row.marca}</p></StyledTableCell>
-                                <StyledTableCell align="center"><p className="textTable">{row.precio}</p></StyledTableCell>
-                                <StyledTableCell align="center"><p className="textTable">{row.stock}</p></StyledTableCell>
-                                <StyledTableCell align="center"><img src={`${row.foto}`} width={100} height={100} alt="Imagen de los productos" /></StyledTableCell>
-                                <StyledTableCell align="center">{
-                                    row.id_estados === 1 ?
-                                        <Button color="success" onClick={() => { changeState(row.id ?? -1, 2) }}>Activo</Button>
-                                        :
-                                        <Button color="error" onClick={() => { changeState(row.id ?? -1, 1) }} >Inactivo</Button>
-                                }
+            <Container sx={{ marginTop: "30px", width: "100%" }}>
+                <Container sx={{ display: 'flex', justifyContent: "space-between" }}>
+                    <h1>Productos</h1>
+                    <Button variant="contained" size="small" onClick={() => Navigate('/operator/productos/crear')}><AddSharpIcon /></Button>
+                </Container>
+                <TableContainer component={Paper}>
+                    <Table sx={{ width: "1100px" }} aria-label="customized table">
+                        <TableHead>
+                            <TableRow>
+                                <StyledTableCell align="center">Nombre </StyledTableCell>
+                                <StyledTableCell align="center">Marca</StyledTableCell>
+                                <StyledTableCell align="center">Precio Q</StyledTableCell>
+                                <StyledTableCell align="center">Stock</StyledTableCell>
+                                <StyledTableCell align="center">Foto</StyledTableCell>
+                                <StyledTableCell align="center">Estado</StyledTableCell>
+                                <StyledTableCell align="center">Actualizar</StyledTableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {products.map((row: any) => (
+                                <StyledTableRow key={row.id}>
+                                    <StyledTableCell component="th" scope="row" align="center"> <p className="textTable">{row.nombre}</p></StyledTableCell>
+                                    <StyledTableCell align="center"><p className="textTable">{row.marca}</p></StyledTableCell>
+                                    <StyledTableCell align="center"><p className="textTable">{row.precio}</p></StyledTableCell>
+                                    <StyledTableCell align="center"><p className="textTable">{row.stock}</p></StyledTableCell>
+                                    <StyledTableCell align="center"><img src={`${row.foto}`} width={100} height={100} alt="Imagen de los productos" /></StyledTableCell>
+                                    <StyledTableCell align="center">{
+                                        row.id_estados === 1 ?
+                                            <Button color="success" onClick={() => { changeState(row.id ?? -1, 2) }}>Activo</Button>
+                                            :
+                                            <Button color="error" onClick={() => { changeState(row.id ?? -1, 1) }} >Inactivo</Button>
+                                    }
 
-                                </StyledTableCell>
-                                <StyledTableCell align="center"><Button onClick={() => Navigate(`editar/${row.id}`)} color="secondary" >Actualizar</Button></StyledTableCell>
-                            </StyledTableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                                    </StyledTableCell>
+                                    <StyledTableCell align="center"><Button onClick={() => Navigate(`editar/${row.id}`)} color="secondary" >Actualizar</Button></StyledTableCell>
+                                </StyledTableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
 
-        </Container>
+            </Container>
+
+        </>
+
 
     )
 

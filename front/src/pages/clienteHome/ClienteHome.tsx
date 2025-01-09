@@ -4,6 +4,7 @@ import { useContext } from "react"
 import { ShopingContext } from "../../context/shopingCardContext"
 import { typeProductsApi } from "../../types/operator"
 import ShoppingCar from "../../components/userComponents/shopingCart"
+import BarCliente from "../../components/common/navigateCliente"
 
 
 export const PagesClienteUser = () => {
@@ -20,7 +21,7 @@ export const PagesClienteUser = () => {
 
     return (
         <>
-
+            <BarCliente />
 
             <Container sx={{ display: 'flex', flexWrap: 'wrap', maxWidth: '1200px', gap: '30px', marginTop: '100px' }}>
                 {products.map((pro: typeProductsApi) => (

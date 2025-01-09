@@ -6,6 +6,7 @@ import { apiClient } from "../../utils/apis/operator/clientes";
 import { apiRol } from "../../utils/apis/operator/rol";
 import { useParams } from "react-router-dom";
 import { callAcctionUser } from "../../utils/apis/opUser/acctionUser";
+import NavBarOperator from "../../components/common/navigateOperator";
 
 
 export const PagesUserEditar = () => {
@@ -66,8 +67,10 @@ export const PagesUserEditar = () => {
     console.log(userData)
     return (
 
-
-        <FormUsuarios isEdit={true} client={client} rol={rol} usuarios={userData} />
+        <>
+            <NavBarOperator />
+            <FormUsuarios isEdit={true} client={client} rol={rol} usuarios={userData} />
+        </>
 
     )
 

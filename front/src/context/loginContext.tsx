@@ -20,8 +20,13 @@ export const LoginProvider: React.FC<typeLoginContext> = ({ children }) => {
         }
     }
 
-    function logOut() {
+    async function logOut() {
         setUser(null)
+        await fetch('http://localhost:3000/logout', {
+            credentials: 'include'
+        })
+
+
     }
 
     return (<loginContext.Provider value={

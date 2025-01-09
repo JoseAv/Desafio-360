@@ -4,6 +4,7 @@ import { FormUsuarios } from "../../components/operatorComponents/usuarios/FormU
 import { typeClienteUser, typeRol } from "../../types/operator";
 import { apiClient } from "../../utils/apis/operator/clientes";
 import { apiRol } from "../../utils/apis/operator/rol";
+import NavBarOperator from "../../components/common/navigateOperator";
 
 
 export const PagesUserCreate = () => {
@@ -42,9 +43,10 @@ export const PagesUserCreate = () => {
     console.log('Rol', rol)
 
     return (
-
-
-        <FormUsuarios isEdit={false} client={client} rol={rol} />
+        <>
+            <NavBarOperator />
+            <FormUsuarios isEdit={false} client={client} rol={rol} />
+        </>
 
     )
 

@@ -765,3 +765,14 @@ precio= COALESCE(@precio,precio),
 subtotal= COALESCE(@subtotal,subtotal)
 WHERE id = @id
 END;
+
+// Ver los productos de una orden
+create or ALTER  PROCEDURE sp_view_orden_prodcuts
+@id int
+as
+BEGIN 
+SELECT * from orden_detalles od 
+inner join productos p 
+on p.id  = od.id_productos 
+WHERE id_orden =@id
+END

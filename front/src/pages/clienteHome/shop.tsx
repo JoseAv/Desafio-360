@@ -6,6 +6,7 @@ import { Alert, Box, Button, Card, CardContent, CardMedia, Container, TextField,
 import { apiOrden } from "../../utils/apis/opUser/orden"
 import { useNavigate } from "react-router-dom"
 import { typeProductsApi } from "../../types/operator"
+import BarCliente from "../../components/common/navigateCliente"
 
 interface orden {
     nombre_completo: string,
@@ -33,11 +34,6 @@ export const PagePay = () => {
 
     if (!productsInCart?.length) return <h1>No hay productos para comprar</h1>
 
-
-
-
-
-
     const onSubmit: SubmitHandler<orden> = async (data) => {
         data.total_orden = TotalCard()
         data.fecha_entrega = "2024-12-22"
@@ -60,6 +56,8 @@ export const PagePay = () => {
 
     return (
         <>
+
+            <BarCliente />
             {message ? <Alert variant="filled" severity="error"> {message}</Alert> : null}
 
             <Container sx={{ display: 'flex' }}>
@@ -93,10 +91,11 @@ export const PagePay = () => {
                             sx={{ width: '400px' }}
                             {...register("correo_electronico", { required: true })} />
 
-                        <Button type="submit" variant="contained" sx={{ width: '400px' }}>Confirmar datos</Button>
+                        <Container sx={{ display: 'flex', gap: '10px' }}>
+                            <Button type="submit" variant="contained" sx={{ width: '200px' }}>Confirmar datos</Button>
+                            <Button type="submit" variant="contained" color="error" sx={{ width: '200px' }} onClick={() => Navigate('/cliente/home')}>Cancelar</Button>
 
-                        <Button type="submit" variant="contained" sx={{ width: '400px' }} onClick={() => Navigate('/cliente/home')}>Cancelar</Button>
-
+                        </Container>
                     </Container>
                 </form >
 

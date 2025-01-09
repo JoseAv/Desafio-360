@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { loginContext } from "../../../context/loginContext";
 import { FormCategorias } from "../../../components/operatorComponents/categorias/FormCategory";
+import NavBarOperator from "../../../components/common/navigateOperator";
 
 export const PagesCategoriasCreate = () => {
 
@@ -14,8 +15,10 @@ export const PagesCategoriasCreate = () => {
 
     return (
 
-
-        <FormCategorias isEdit={false} />
+        <>
+            <NavBarOperator />
+            <FormCategorias isEdit={false} />
+        </>
 
     )
 

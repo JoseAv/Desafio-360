@@ -5,6 +5,7 @@ import { FormProductos } from "../../components/operatorComponents/productos/pro
 import { apiCategory } from "../../utils/apis/operator/category";
 import { useParams } from "react-router-dom";
 import { apiProducts } from "../../utils/apis/shared/productos";
+import NavBarOperator from "../../components/common/navigateOperator";
 
 
 export const PagesProductosEditar = () => {
@@ -56,8 +57,10 @@ export const PagesProductosEditar = () => {
     console.log('Productos aqui', productos)
     return (
 
-
-        <FormProductos isEdit={true} categorias={categorias} productos={productos} />
+        <>
+            <NavBarOperator />
+            <FormProductos isEdit={true} categorias={categorias} productos={productos} />
+        </>
 
     )
 

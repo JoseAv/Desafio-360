@@ -11,6 +11,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button, Container } from "@mui/material";
 import { StyledTableCell, StyledTableRow } from "../../utils/styles/stylesTable";
+import NavBarOperator from "../../components/common/navigateOperator";
 
 export const Operator = () => {
 
@@ -19,7 +20,7 @@ export const Operator = () => {
     useEffect(() => {
         async function callNewOrder() {
             try {
-                const newOrder = await callOrders()
+                const newOrder = await callOrders({ "acction": "V", "data": {} })
                 if (newOrder && !order) {
                     setOrder(newOrder.dataQuery)
                 }
@@ -81,42 +82,45 @@ export const Operator = () => {
     if (!order) return <h1>Sin Ordenes</h1>
 
     return (
+        <>
+            <NavBarOperator />
+            <Container sx={{ marginTop: "30px", width: "100%" }}>
+                <h1>Ordenes de Clientes</h1>
+                <TableContainer component={Paper}>
+                    <Table sx={{ width: "1000px" }} aria-label="customized table">
+                        <TableHead>
+                            <TableRow>
+                                <StyledTableCell>Nombre Completo</StyledTableCell>
+                                <StyledTableCell align="center">Direccion</StyledTableCell>
+                                <StyledTableCell align="center">Telefono</StyledTableCell>
+                                <StyledTableCell align="center">Correo Electronico</StyledTableCell>
+                                <StyledTableCell align="center">Estado</StyledTableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {order.map((row) => (
+                                <StyledTableRow key={row.id}>
+                                    <StyledTableCell component="th" scope="row">
+                                        <p className="textTable">{row.nombre_completo}</p>
+                                    </StyledTableCell>
+                                    <StyledTableCell align="center"><p className="textTable">{row.direccion}</p></StyledTableCell>
+                                    <StyledTableCell align="center"><p className="textTable">{row.telefono}</p></StyledTableCell>
+                                    <StyledTableCell align="center"><p className="textTable">{row.correo_electronico}</p></StyledTableCell>
+                                    <StyledTableCell align="center">{
+                                        row.id_estados === 1 ?
+                                            <Button color="secondary" onClick={() => { changeState(row.id) }}>Pendiente</Button>
+                                            : <Button color="success" >Entregado</Button>}
+                                    </StyledTableCell>
 
-        <Container sx={{ marginTop: "120px", width: "100%" }}>
-            <h1>Ordenes</h1>
-            <TableContainer component={Paper}>
-                <Table sx={{ width: "1000px" }} aria-label="customized table">
-                    <TableHead>
-                        <TableRow>
-                            <StyledTableCell>Nombre Completo</StyledTableCell>
-                            <StyledTableCell align="center">Direccion</StyledTableCell>
-                            <StyledTableCell align="center">Telefono</StyledTableCell>
-                            <StyledTableCell align="center">Correo Electronico</StyledTableCell>
-                            <StyledTableCell align="center">Estado</StyledTableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {order.map((row) => (
-                            <StyledTableRow key={row.id}>
-                                <StyledTableCell component="th" scope="row">
-                                    <p className="textTable">{row.nombre_completo}</p>
-                                </StyledTableCell>
-                                <StyledTableCell align="center"><p className="textTable">{row.direccion}</p></StyledTableCell>
-                                <StyledTableCell align="center"><p className="textTable">{row.telefono}</p></StyledTableCell>
-                                <StyledTableCell align="center"><p className="textTable">{row.correo_electronico}</p></StyledTableCell>
-                                <StyledTableCell align="center">{
-                                    row.id_estados === 1 ?
-                                        <Button color="secondary" onClick={() => { changeState(row.id) }}>Pendiente</Button>
-                                        : <Button color="success" >Entregado</Button>}
-                                </StyledTableCell>
+                                </StyledTableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
 
-                            </StyledTableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+            </Container>
+        </>
 
-        </Container>
 
     )
 

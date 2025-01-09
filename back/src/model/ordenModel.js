@@ -131,6 +131,42 @@ export class ModelOrden {
 
     }
 
+    static viewClientOrden = async ({ id }) => {
+
+        try {
+            const ViewData = await sequelize.query(`SELECT * from orden o where id_usuario= :id `, {
+                replacements: { id: id },
+                type: sequelize.QueryTypes.SELECT
+            })
+
+            console.log(ViewData)
+
+            return ValidationResponse.Accepted({ message: "Datos enviados con exito", dataQuery: ViewData })
+
+        } catch (error) {
+            return ValidationResponse.Denied({ message: MessagePersonalise.failPeticion('Error de peticion de orden'), error: error })
+        }
+
+    }
+
+    static viewProductsOrden = async ({ id }) => {
+
+        try {
+            const ViewData = await sequelize.query(`EXEC sp_view_orden_prodcuts :id `, {
+                replacements: { id: id },
+                type: sequelize.QueryTypes.SELECT
+            })
+
+            console.log(ViewData)
+
+            return ValidationResponse.Accepted({ message: "Datos enviados con exito", dataQuery: ViewData })
+
+        } catch (error) {
+            return ValidationResponse.Denied({ message: MessagePersonalise.failPeticion('Error de peticion de orden'), error: error })
+        }
+
+    }
+
 
 }
 

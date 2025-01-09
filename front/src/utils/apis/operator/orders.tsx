@@ -1,4 +1,4 @@
-export const callOrders = async () => {
+export const callOrders = async (data: unknown) => {
     try {
 
         const response = await fetch('http://localhost:3000/orden', {
@@ -6,7 +6,7 @@ export const callOrders = async () => {
                 "Content-Type": "application/json",
             },
             method: 'POST',
-            body: JSON.stringify({ "acction": "V" }),
+            body: JSON.stringify(data),
             credentials: 'include'
         })
 
@@ -16,6 +16,4 @@ export const callOrders = async () => {
     } catch (error) {
         console.log(error)
     }
-
-
 }

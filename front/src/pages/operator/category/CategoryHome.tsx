@@ -12,11 +12,13 @@ import { StyledTableCell, StyledTableRow } from "../../../utils/styles/stylesTab
 import { useNavigate } from "react-router-dom";
 import { apiCategory } from "../../../utils/apis/operator/category";
 import { Category } from "../../../types/operator";
-
+import NavBarOperator from "../../../components/common/navigateOperator";
+import AddSharpIcon from '@mui/icons-material/AddSharp';
 
 export const PagesCategoryHome = () => {
     const Navigate = useNavigate()
     const [category, setCategory] = useState<Category[] | null>(null)
+    const navigate = useNavigate()
 
     useEffect(() => {
         async function callCategorys() {
@@ -74,38 +76,45 @@ export const PagesCategoryHome = () => {
 
     return (
 
-        <Container sx={{ marginTop: "120px", width: "100%" }}>
-            <h1>Categorias </h1>
-            <TableContainer component={Paper}>
-                <Table sx={{ width: "1000px" }} aria-label="customized table">
-                    <TableHead>
-                        <TableRow>
-                            <StyledTableCell>Nombre Categoria </StyledTableCell>
-                            <StyledTableCell align="center">Estados</StyledTableCell>
-                            <StyledTableCell align="center">Actualizar</StyledTableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {category.map((row) => (
-                            <StyledTableRow key={row.id}>
-                                <StyledTableCell component="th" scope="row">
-                                    <p className="textTable">{row.nombre}</p>
-                                </StyledTableCell>
-                                <StyledTableCell align="center">{
-                                    row.id_estados === 1 ?
-                                        <Button color="success" onClick={() => { changeState(row.id ?? -1, 2) }}>Activo</Button>
-                                        :
-                                        <Button color="error" onClick={() => { changeState(row.id ?? -1, 1) }} >Inactivo</Button>
-                                }
-                                </StyledTableCell>
-                                <StyledTableCell align="center"><Button onClick={() => Navigate(`editar/${row.id}`)} color="secondary" >Actualizar</Button></StyledTableCell>
-                            </StyledTableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+        <><NavBarOperator />
+            <Container sx={{ marginTop: "30px", width: "100%" }}>
+                <Container sx={{ display: 'flex', justifyContent: "space-between" }}>
+                    <h1>Categorias</h1>
+                    <Button variant="contained" size="small" onClick={() => navigate('/operator/categorias/crear')}><AddSharpIcon /></Button>
+                </Container>
+                <TableContainer component={Paper}>
+                    <Table sx={{ width: "1000px" }} aria-label="customized table">
+                        <TableHead>
+                            <TableRow>
+                                <StyledTableCell>Nombre Categoria </StyledTableCell>
+                                <StyledTableCell align="center">Estados</StyledTableCell>
+                                <StyledTableCell align="center">Actualizar</StyledTableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {category.map((row) => (
+                                <StyledTableRow key={row.id}>
+                                    <StyledTableCell component="th" scope="row">
+                                        <p className="textTable">{row.nombre}</p>
+                                    </StyledTableCell>
+                                    <StyledTableCell align="center">{
+                                        row.id_estados === 1 ?
+                                            <Button color="success" onClick={() => { changeState(row.id ?? -1, 2) }}>Activo</Button>
+                                            :
+                                            <Button color="error" onClick={() => { changeState(row.id ?? -1, 1) }} >Inactivo</Button>
+                                    }
+                                    </StyledTableCell>
+                                    <StyledTableCell align="center"><Button onClick={() => Navigate(`editar/${row.id}`)} color="secondary" >Actualizar</Button></StyledTableCell>
+                                </StyledTableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
 
-        </Container>
+            </Container>
+        </>
+
+
 
     )
 
