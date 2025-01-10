@@ -57,7 +57,7 @@ export const FormCategorias: React.FC<typeFormClientes> = ({ isEdit = false, cat
                         {...register("nombre", { required: true })} />
 
                     <Button type="submit" variant="contained" sx={{ width: '400px' }}>
-                        {isEdit ? 'Editar cliente' : 'Crear cliente'}
+                        {isEdit ? 'Editar Categoria' : 'Crear Categoria'}
                     </Button>
 
                 </Container>

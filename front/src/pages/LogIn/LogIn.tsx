@@ -13,20 +13,21 @@ export const Login = () => {
     const [alert, setAlert] = useState(false)
     const navigate = useNavigate()
 
-    const { handleSubmit, register } = useForm()
+    const { handleSubmit, register, reset } = useForm()
     const context = useContext(loginContext)
     if (!context) return <h1>Error: Contexto no disponible</h1>
 
 
     const onSubmit = async (data: unknown) => {
         const responseUser: ResponseUser = await callUser(data)
-        console.log(responseUser)
         if (!responseUser.success) return setAlert(true)
         setAlert(false)
         if (responseUser.dataQuery.rol === 1) {
+            reset()
             navigate("/operator/home")
             return
         }
+        reset()
         navigate("/cliente/home")
     }
 

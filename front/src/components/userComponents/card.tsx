@@ -38,7 +38,7 @@ export const PagesCard: React.FC<typeProducts> = ({ product = null }) => {
                         Stock total : {product?.stock}
                     </Typography>
                     <Typography variant="h6" sx={{ color: 'text.secondary' }}>
-                        Marca: {product?.precio}
+                        Precio: {product?.precio}
                     </Typography>
                     <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                         Marca: {product?.marca}
@@ -53,7 +53,9 @@ export const PagesCard: React.FC<typeProducts> = ({ product = null }) => {
                             <Button size="small" onClick={() => AddProduct(product)}>Mas</Button>
                         </>
                         :
-                        <Button size="small" onClick={() => AddProduct(product)}>Agregar</Button>
+                        product.id_estados === 1 ?
+                            product.stock !== 0 ? <Button size="small" onClick={() => AddProduct(product)}>Agregar</Button> : <Button size="small" >No hay stock Disponible </Button>
+                            : <Button size="small" >Producto no disponible</Button>
                     }
 
                 </CardActions>
