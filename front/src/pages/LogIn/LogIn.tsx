@@ -12,11 +12,16 @@ import { loginContext } from "../../context/loginContext"
 export const Login = () => {
     const [alert, setAlert] = useState(false)
     const navigate = useNavigate()
-
     const { handleSubmit, register, reset } = useForm()
+
     const context = useContext(loginContext)
     if (!context) return <h1>Error: Contexto no disponible</h1>
-
+    context.loginUser()
+    const { user } = context
+    if (user && user.rol) {
+        if (user.rol === 2) return navigate("/cliente/home")
+        if (user.rol === 1) return navigate("/operator/home")
+    }
 
     const onSubmit = async (data: unknown) => {
         const responseUser: ResponseUser = await callUser(data)
@@ -24,11 +29,11 @@ export const Login = () => {
         setAlert(false)
         if (responseUser.dataQuery.rol === 1) {
             reset()
-            navigate("/operator/home")
-            return
+            return navigate("/operator/home")
+
         }
         reset()
-        navigate("/cliente/home")
+        return navigate("/cliente/home")
     }
 
     return (
