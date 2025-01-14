@@ -1,6 +1,6 @@
 import { Container } from "@mui/material"
 import { PagesCard } from "../../components/userComponents/card"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { ShopingContext } from "../../context/shopingCardContext"
 import { typeProductsApi } from "../../types/operator"
 import ShoppingCar from "../../components/userComponents/shopingCart"
@@ -9,9 +9,15 @@ import BarCliente from "../../components/common/navigateCliente"
 
 export const PagesClienteUser = () => {
     const context = useContext(ShopingContext)
+    useEffect(() => {
+        if (context) {
+            callProducts()
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
     if (!context) return <h1>No existe Contexto</h1>
     const { products, loading, error, callProducts } = context
-    callProducts()
+
 
     if (!products) return <h1>No hay Productos</h1>
     if (loading) return <h1>Cargando</h1>

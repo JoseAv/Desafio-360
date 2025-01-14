@@ -1,27 +1,12 @@
+/* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useCallback, useEffect, useState } from "react";
 import { typeProductsApi } from "../types/operator";
 import { apiProducts } from "../utils/apis/shared/productos";
+import { ShopingTypes, ShopingValues } from "../types/contextCar";
+
 
 
 export const ShopingContext = createContext<ShopingValues | null>(null)
-
-interface ShopingTypes {
-    children: JSX.Element
-}
-
-interface ShopingValues {
-    products: typeProductsApi[] | null
-    loading: boolean
-    error: string | null
-    callProducts: () => void
-    AddProduct: (product: typeProductsApi) => void
-    productsInCart: typeProductsApi[] | null
-    minProducts: (product: typeProductsApi) => void
-    resetCart: () => void
-    openShop: () => void
-    closeShop: boolean
-    TotalCard: () => number
-}
 
 
 export const Shoping: React.FC<ShopingTypes> = ({ children }) => {
@@ -53,7 +38,6 @@ export const Shoping: React.FC<ShopingTypes> = ({ children }) => {
     }
 
     const callProducts = useCallback(async () => {
-        if (products) return;
         try {
             setLoading(true);
             const newProducst = await apiProducts({ acction: "V" });
@@ -64,7 +48,6 @@ export const Shoping: React.FC<ShopingTypes> = ({ children }) => {
                 total: ele.precio,
                 subtotal: 0,
                 id_productos: ele.id
-
             }))
             setProducts(changeProducts);
         } catch (error) {
@@ -73,7 +56,7 @@ export const Shoping: React.FC<ShopingTypes> = ({ children }) => {
         } finally {
             setLoading(false);
         }
-    }, [products]);
+    }, []);
 
     useEffect(() => {
         callProducts();
@@ -106,7 +89,6 @@ export const Shoping: React.FC<ShopingTypes> = ({ children }) => {
     }
 
     const minProducts = (product: typeProductsApi) => {
-        console.log(product)
         if (!productsInCart) return
 
         const indexProducts = productsInCart.findIndex((ele: typeProductsApi) => ele.id === product.id)

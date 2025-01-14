@@ -18,7 +18,6 @@ export const useProducts = (obj: unknown) => {
 
             try {
                 const newProducts: any = await apiProducts(obj)
-                console.log(newProducts)
                 const changeProducts = newProducts.dataQuery.map((ele: any) => ({
                     ...ele,
                     quantity: 0,
@@ -42,7 +41,6 @@ export const useProducts = (obj: unknown) => {
 
 
 export async function apiProducts(obj: unknown) {
-    console.log(obj)
     const responseProducts = await fetch('http://localhost:3000/products', {
         method: 'POST',
         credentials: 'include',
@@ -56,7 +54,6 @@ export async function apiProducts(obj: unknown) {
 
 
 export async function apiProductsText(obj: any) {
-    console.log('Objetos', obj)
     const formdata = new FormData()
     const { foto, ...data }: any = obj
     formdata.append('foto', foto ? foto[0] : null)

@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { ProtectedCliente, ProtectedOperator } from "./Routes/protectedRoutes";
 //Opertador
 import { Operator } from "./pages/operator/Operator";
@@ -45,6 +45,8 @@ function App() {
           <Route path="productos" element={<PagesProductosHome />} />
           <Route path="productos/editar/:id" element={<PagesProductosEditar />} />
 
+          <Route path="*" element={<Login />} />
+
         </Route>
 
 
@@ -52,11 +54,14 @@ function App() {
           <Route path="home" element={<PagesClienteUser />} />
           <Route path="pay" element={<PagePay />} />
           <Route path="detalles" element={<OrdenDetails />} />
+
+          <Route path="*" element={<Login />} />
         </Route>
 
 
 
-        <Route path="*" element={<h1>Página no encontrada</h1>} />
+        <Route path="*" element={<Navigate to="/login" replace />} />
+
 
         <Route path="/login" element={<Login />} />
 

@@ -1,7 +1,7 @@
 import { Alert, Button, Container, TextField } from "@mui/material"
 import { useForm } from "react-hook-form"
 import { callUser } from '../../utils/apis/user/authUser'
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { ResponseUser } from "../../types/user"
 import { loginContext } from "../../context/loginContext"
@@ -15,13 +15,23 @@ export const Login = () => {
     const { handleSubmit, register, reset } = useForm()
 
     const context = useContext(loginContext)
+    useEffect(() => {
+
+        if (context) {
+            context.loginUser()
+            if (context.user && context.user.rol) {
+                if (context.user.rol === 2) {
+                    navigate('/cliente/home')
+                }
+                if (context.user.rol === 1) {
+                    navigate('/operator/home')
+                }
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     if (!context) return <h1>Error: Contexto no disponible</h1>
-    context.loginUser()
-    const { user } = context
-    if (user && user.rol) {
-        if (user.rol === 2) return navigate("/cliente/home")
-        if (user.rol === 1) return navigate("/operator/home")
-    }
 
     const onSubmit = async (data: unknown) => {
         const responseUser: ResponseUser = await callUser(data)

@@ -1,9 +1,10 @@
-import { Alert, Button, Container, FormControl, InputLabel, MenuItem, Select, styled, TextField } from "@mui/material"
+import { Alert, Button, Container, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material"
 import React, { useEffect } from "react"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { CategoryForm, typeProductsApi } from "../../../types/operator"
 import { useNavigate } from "react-router-dom"
 import { apiProductsText } from "../../../utils/apis/shared/productos"
+import { VisuallyHiddenInput } from "../../../utils/styles/stylesTable"
 
 interface typeFormProductos {
     isEdit: boolean
@@ -13,6 +14,7 @@ interface typeFormProductos {
 
 export const FormProductos: React.FC<typeFormProductos> = ({ isEdit = false, productos, categorias }) => {
     const Navigate = useNavigate()
+
     const {
         reset,
         register,
@@ -28,6 +30,7 @@ export const FormProductos: React.FC<typeFormProductos> = ({ isEdit = false, pro
         }
     }, [isEdit, productos, reset]);
 
+
     const onSubmit: SubmitHandler<typeProductsApi> = async (data) => {
         data.precio = Math.round(Number(data.precio))
         data.stock = Number(Number(data.stock))
@@ -40,7 +43,6 @@ export const FormProductos: React.FC<typeFormProductos> = ({ isEdit = false, pro
             data: { acction: isEdit ? 'U' : 'C', data: data },
             foto: data.foto
         }
-        console.log(obj)
 
         const responseValidation = await apiProductsText(obj)
         if (!responseValidation.success) {
@@ -51,17 +53,6 @@ export const FormProductos: React.FC<typeFormProductos> = ({ isEdit = false, pro
 
     }
 
-    const VisuallyHiddenInput = styled('input')({
-        clip: 'rect(0 0 0 0)',
-        clipPath: 'inset(50%)',
-        height: 1,
-        overflow: 'hidden',
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        whiteSpace: 'nowrap',
-        width: 1,
-    });
 
     return (
         <>

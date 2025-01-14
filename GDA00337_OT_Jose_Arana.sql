@@ -776,3 +776,24 @@ inner join productos p
 on p.id  = od.id_productos 
 WHERE id_orden =@id
 END
+
+//Tigger
+
+CREATE or alter TRIGGER trg_change_active_product_and_category
+ON categoria_productos
+AFTER UPDATE
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    IF UPDATE(id_estados)
+    BEGIN
+        UPDATE p
+        SET id_estados = CASE 
+                            WHEN i.id_estados = 1 THEN 1
+                            WHEN i.id_estados = 2 THEN 2
+                         END
+        FROM productos p
+        INNER JOIN inserted i ON p.id_categorias = i.id;
+    END
+END;
