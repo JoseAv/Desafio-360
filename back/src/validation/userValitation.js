@@ -9,7 +9,7 @@ const userValidation = z.object({
     correo_electronico: z.string().email('No es un email Valido'),
     nombre_completo: z.string().min(1, { message: 'Este campo no puede ir vacio' }),
     password: z.string(),
-    telefono: z.string(),
+    telefono: z.string().length(8, "El numero debe de ser de 8 caracteres"),
     fecha_nacimiento: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
     id_clientes: z.number().int()
 })

@@ -12,7 +12,7 @@ export class ControllersUser {
         if (!ComprobateUser(req.body).success) return ValidationResponse.Denied({ message: MessagePersonalise.DataEmpty('Datos Incorrecto') })
         const loginUser = await this.userModel.login({ data: req.body })
         console.log(loginUser)
-        if (!loginUser.success) return res.status(loginUser.statusCode).json({ ...loginUser })
+        if (!loginUser.success || loginUser.dataQuery.id_estados === 2) return res.status(loginUser.statusCode).json({ ...loginUser })
         let token = jwt.sign(loginUser.dataQuery, SecretePass, { expiresIn: '1d' })
         return res.status(loginUser.statusCode).cookie('access_user', token, {
             httpOnly: true,
@@ -61,7 +61,11 @@ export class ControllersUser {
         if (acction === "C") {
 
             sendValidation = createUser(data)
-            if (!sendValidation.success) return ValidationResponse.Denied({ message: MessagePersonalise.DataEmpty('Dato correcto') })
+            console.log(sendValidation)
+            if (!sendValidation.success) {
+                res.status(400).json(ValidationResponse.Denied({ message: MessagePersonalise.DataEmpty('Dato correcto') }))
+                return
+            }
             const userCreate = await this.userModel.userCreate({ data: data })
 
             return res.status(userCreate.statusCode).json({ ...userCreate })

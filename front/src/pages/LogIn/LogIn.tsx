@@ -11,6 +11,7 @@ import { loginContext } from "../../context/loginContext"
 
 export const Login = () => {
     const [alert, setAlert] = useState(false)
+    const [error, setError] = useState(false)
     const navigate = useNavigate()
     const { handleSubmit, register, reset } = useForm()
 
@@ -37,6 +38,12 @@ export const Login = () => {
         const responseUser: ResponseUser = await callUser(data)
         if (!responseUser.success) return setAlert(true)
         setAlert(false)
+        setError(false)
+        console.log('Datos Usuario', responseUser)
+        if (responseUser.dataQuery.id_estados === 2) {
+            setError(true)
+            return
+        }
         if (responseUser.dataQuery.rol === 1) {
             reset()
             return navigate("/operator/home")
@@ -50,6 +57,10 @@ export const Login = () => {
         <>
             {alert ? <Alert variant="filled" severity="error">
                 Contraseña o correo Electrónico incorrectos
+            </Alert> : null}
+
+            {error ? <Alert variant="filled" severity="error">
+                Cuenta Suspendida
             </Alert> : null}
 
 

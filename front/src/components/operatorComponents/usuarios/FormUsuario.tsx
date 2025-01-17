@@ -1,5 +1,5 @@
-import { Button, Container, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material"
-import React, { useEffect } from "react"
+import { Alert, Button, Container, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material"
+import React, { useEffect, useState } from "react"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { typeClienteUser, typeRol, typeUserForm } from "../../../types/operator"
 import { useNavigate } from "react-router-dom"
@@ -22,6 +22,7 @@ export const FormUsuarios: React.FC<typeFormClientes> = ({ isEdit = false, usuar
     } = useForm<typeUserForm>()
     const selectedRol = watch("id_rol")
     const selectedCliente = watch("id_clientes")
+    const [error, seterror] = useState<null | string>(null)
 
     useEffect(() => {
         if (isEdit && usuarios) {
@@ -30,16 +31,21 @@ export const FormUsuarios: React.FC<typeFormClientes> = ({ isEdit = false, usuar
     }, [isEdit, usuarios, reset]);
 
     const onSubmit: SubmitHandler<typeUserForm> = async (data) => {
+
         const obj = {
             acction: isEdit ? 'U' : 'C',
             data: data
         }
+
         const responseValidation = await callAcctionUser(obj)
-        console.log('Respuesta', responseValidation)
+
         if (!responseValidation.success) {
+            console.log(responseValidation)
+            seterror(responseValidation.message)
             return
         }
         reset()
+        seterror(null)
         return Navigate("/operator/usuarios")
 
     }
@@ -48,6 +54,8 @@ export const FormUsuarios: React.FC<typeFormClientes> = ({ isEdit = false, usuar
 
     return (
         <>
+            {error ? <Alert>{error}</Alert> : null}
+
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Container sx={{ display: 'flex', alignItems: "center", flexDirection: 'column', gap: '40px', marginTop: '90px' }}>
                     <h1>{isEdit ? 'Edicion de Usuario' : 'Nueva Usuario'}</h1>
