@@ -29,7 +29,7 @@ export const PagesClienteUser = () => {
         <>
             <BarCliente />
 
-            <Container sx={{ display: 'flex', flexWrap: 'wrap', maxWidth: '1200px', gap: '30px', marginTop: '100px' }}>
+            <Container sx={{ display: 'flex', flexWrap: 'wrap', maxWidth: '1200px', gap: '30px', marginTop: '100px', marginBottom: '50px' }}>
                 {products.map((pro: typeProductsApi) => (
                     <PagesCard product={pro} key={pro.id} />
 

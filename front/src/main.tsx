@@ -9,15 +9,26 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { LoginProvider } from './context/loginContext.tsx';
 import { Shoping } from './context/shopingCardContext.tsx';
+import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 
+
+const theme = createTheme({
+  typography: {
+    fontFamily: '"Roboto", sans-serif'
+  },
+});
 
 
 createRoot(document.getElementById('root')!).render(
   <LoginProvider>
     <Shoping>
       <StrictMode>
-        <App />
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <App />
+        </ThemeProvider>
       </StrictMode>
+
     </Shoping>
   </LoginProvider>
 )

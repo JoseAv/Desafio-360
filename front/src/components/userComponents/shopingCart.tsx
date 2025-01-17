@@ -3,14 +3,12 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Drawer from '@mui/material/Drawer';
-// import ListItemIcon from '@mui/material/ListItemIcon';
 import { Button, Card, CardContent, CardMedia, Container, Typography } from '@mui/material';
-// import { ArrowBack } from '@mui/icons-material';
 import { ShopingContext } from '../../context/shopingCardContext';
 import { typeProductsApi } from '../../types/operator';
 import { useNavigate } from 'react-router-dom';
 
-const drawerWidth = 240;
+const drawerWidth = 300;
 
 interface Props {
     window?: () => Window;
@@ -23,7 +21,7 @@ export default function ShoppingCar(props: Props) {
 
     const context = React.useContext(ShopingContext)
     if (!context) return <h1>No hay Context</h1>
-    const { openShop, closeShop, TotalCard, resetCart, AddProduct, minProducts, productsInCart } = context
+    const { closeShop, TotalCard, resetCart, AddProduct, minProducts, productsInCart } = context
 
     const handleDrawerClose = () => {
         setMobileOpen(false);
@@ -32,66 +30,112 @@ export default function ShoppingCar(props: Props) {
     const handleDrawerTransitionEnd = () => {
     };
 
-    // <Button color='primary' onClick={() => openShop()}><ListItemIcon><ArrowBack /></ListItemIcon></Button>
 
     const drawer = (
         <>
-            <Button color='primary' sx={{ fontSize: '30px' }} >Total: {TotalCard()} Q</Button>
+            <Box sx={{
+                with: '100%', padding: '10px',
+                display: 'flex', flexDirection: 'column',
+                alignItems: 'center', borderBottom: ' 1px solid rgba(0, 0, 0, 0.12)',
+                boxshadow: 'var(--Paper-shadow)'
+            }}>
+                <Typography
+                    variant="h6"
+                    component="div"
+                    sx={{ color: 'var(--primary-color)' }}
+                >
+                    Mi Carrito
+                </Typography>
+
+                <Typography
+                    variant="subtitle2"
+                    component="div"
+                    sx={{ color: 'var(--primary-color)' }}
+                >
+                    No. De Productos {productsInCart?.length ?? 0}
+                </Typography>
+
+            </Box>
+
+
             {productsInCart?.map((ele: typeProductsApi) => (
                 <div key={ele.id}>
+                    <Card sx={{ display: 'flex', width: '100%', flexDirection: 'column', marginTop: '20px' }}>
+                        <Container sx={{ display: 'flex' }}>
+                            <CardMedia
+                                component="img"
+                                sx={{
+                                    height: '50%',
+                                    width: '35%',
+                                    objectFit: 'cover',
+                                }}
+                                image={ele.foto || '../../../public/No_Disponible_Imagen.jpg'}
+                                alt="Image no Disponible"
+                            />
+
+                            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                                <CardContent sx={{ flex: '1 0 auto' }}>
+                                    <Typography
+                                        component="div"
+                                        variant="subtitle2"
+                                        sx={{ color: 'var(--primary-color)' }}>
+                                        {ele.nombre}
+                                    </Typography>
+                                    <Typography
+                                        variant="h5"
+                                        component="div"
+                                        sx={{ color: 'var(--primary-color)' }}
+                                    >
+                                        {ele.precio} Q
+                                    </Typography>
+                                </CardContent>
+                                <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
+                                </Box>
+                            </Box>
+                        </Container>
 
 
-
-                    <Card sx={{ display: 'flex' }}>
-                        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                            <CardContent sx={{ flex: '1 0 auto' }}>
-                                <Typography component="div" variant="body1">
-                                    {ele.nombre}
-                                </Typography>
+                        <Box sx={{ display: 'flex', justifyContent: 'Center', marginBottom: '5px', flexDirection: 'column', alignItems: 'center' }}>
+                            <Box>
                                 <Typography
-                                    variant="subtitle1"
+                                    variant="subtitle2"
                                     component="div"
-                                    sx={{ color: 'text.secondary' }}
+                                    sx={{ color: 'var(--primary-color)' }}
                                 >
-                                    {ele.precio} Q - Unidad
+                                    Cantidad :
                                 </Typography>
-                            </CardContent>
-                            <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
+                            </Box>
+                            <Box>
+                                <Button color='primary' sx={{ fontSize: '50px', height: '30px' }} onClick={() => minProducts(ele)}>-</Button>
+                                <Button size='small' variant="outlined" sx={{ height: '30px' }} >  <small className='priceCar'>{ele.cantidad}</small></Button>
+                                <Button sx={{ fontSize: '35px', height: '30px' }} onClick={() => AddProduct(ele)}>+</Button>
 
                             </Box>
                         </Box>
-                        <CardMedia
-                            component="img"
-                            sx={{
-                                height: 120,
-                                width: 100,
-                                objectFit: 'cover',
-                            }}
-                            image={ele.foto ?? 'No foto'}
-                            alt="Image no Disponible"
-                        />
 
                     </Card>
-                    <Container sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <Button color='primary' sx={{ fontSize: '30px' }} onClick={() => minProducts(ele)}>-</Button>
-                        <Button color='primary' onClick={() => openShop()}>Cantidad {ele.cantidad}</Button>
-                        <Button color='primary' sx={{ fontSize: '20px' }} onClick={() => AddProduct(ele)}>+</Button>
-                    </Container>
 
                 </div >
 
             ))}
 
-            {productsInCart?.length ? <>
-                <Container sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <Button color='primary' sx={{ fontSize: '20px' }} onClick={() => resetCart()}>Limpiar</Button>
-                    <Button color='primary' sx={{ fontSize: '20px' }} onClick={() => Navigate('/cliente/pay')} >Pagar</Button>
-                </Container>
-            </>
-                : null}
+            <Box sx={{ width: '100%' }}>
+                {productsInCart?.length ? <>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', gap: '10px' }}>
+                        <Button variant='outlined' color='error' sx={{ fontSize: '15px', width: '50%', height: '45px' }} onClick={() => resetCart()}>Limpiar</Button>
+                        <Button variant='outlined' color='primary' sx={{ fontSize: '15px', width: '50%' }} onClick={() => Navigate('/cliente/pay')} >Pagar</Button>
+                    </Box>
 
+                    <Button sx={{ fontSize: '15px', background: 'var(--primary-color)', color: 'white', width: '100%' }} >Total: {TotalCard()} Q</Button>
+                </>
+                    : null}
+
+
+
+            </Box>
         </>
-    );
+
+    )
 
     const container = window !== undefined ? () => window().document.body : undefined;
     if (closeShop) return

@@ -76,25 +76,27 @@ export const PagesClienteHome = () => {
     if (!user) return <h1>No Permitido</h1>;
     if (!clientes) return <h1>No hay clientes</h1>
 
+
     return (
         <>
             <NavBarOperator />
-            <Container sx={{ marginTop: "120px", width: "100%" }}>
+            <Container sx={{ marginTop: "60px", width: "100%" }}>
                 <Container sx={{ display: 'flex', justifyContent: "space-between" }}>
                     <h1>Clientes</h1>
-                    <Button variant="contained" size="small" onClick={() => navigate('/operator/clientes/crear')}><AddSharpIcon /></Button>
+                    <Button variant="contained" size="small" sx={{ background: 'var(--primary-color)', width: '50px', height: '40px' }} onClick={() => navigate('/operator/clientes/crear')}><AddSharpIcon sx={{ fontSize: "35px" }} /></Button>
                 </Container>
-                <TableContainer component={Paper}>
+                <TableContainer component={Paper} className="table-head">
                     <Table sx={{ width: "1100px" }} aria-label="customized table">
-                        <TableHead>
-                            <TableRow>
-                                <StyledTableCell>Razon social </StyledTableCell>
+                        <TableHead >
+
+                            <TableRow >
+                                <StyledTableCell align="center">Razon social </StyledTableCell>
                                 <StyledTableCell align="center">Nombre comercial</StyledTableCell>
                                 <StyledTableCell align="center">Direccion de entrega</StyledTableCell>
                                 <StyledTableCell align="center">Telefono</StyledTableCell>
                                 <StyledTableCell align="center">Correo Electronico</StyledTableCell>
                                 <StyledTableCell align="center">Estado</StyledTableCell>
-                                <StyledTableCell align="center"></StyledTableCell>
+                                <StyledTableCell align="center">Actualizar</StyledTableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>

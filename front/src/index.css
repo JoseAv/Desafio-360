@@ -1,26 +1,31 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  --primary-color: #003366;
+  --color-head-table: #eaf0f7;
+  --color-pal-table: #84929e
+}
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #F4F3F2;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.table-head {
+  background-color: #003366;
+  color: white;
 }
 
 
 h1 {
-  color: #333131;
+  color: var(--primary-color);
+  font-weight: bold;
+  margin: 0;
+  padding: 0 !important;
+
+}
+
+
+h3 {
+  color: var(--primary-color);
   font-weight: bold;
   margin: 0;
   padding: 0;
-}
 
+}
 
 p {
   color: #6a6a6a;
@@ -44,4 +49,9 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   font-size: 16px;
+}
+
+.priceCar {
+  font-size: 16px;
+  font-weight: bold;
 }

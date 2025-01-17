@@ -11,51 +11,52 @@ export const PagesCard: React.FC<typeProducts> = ({ product = null }) => {
 
     const context = useContext(ShopingContext)
     if (!context) return <h1>No existe Contexto</h1>
-    const { AddProduct, productsInCart, minProducts } = context
+    const { AddProduct, productsInCart } = context
     const comprobation = productsInCart?.some((ele: typeProductsApi) => ele.id === (product ? product.id : null)) ?? false;
     if (!product) return <h1>No disponible</h1>
 
     return (
         <>
 
-            <Card sx={{ maxWidth: 360, width: 360 }}>
+            <Card sx={{ maxWidth: 360, width: 260, height: 300, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <CardMedia
                     sx={{
-                        height: 120,
+                        height: 90,
                         width: '100%',
-                        objectFit: 'cover',
+                        objectFit: 'contain',
                     }}
                     component={'img'}
                     alt="Imagen de la tarjeta"
-                    image={product?.foto ?? '/'}
+                    image={product?.foto || '../../../public/No_Disponible_Imagen.jpg'}
+
                     title="green iguana"
                 />
-                <CardContent>
-                    <Typography gutterBottom variant="h4" component="div">
+                <CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <Typography gutterBottom variant="subtitle1" component="div" sx={{ fontWeight: 'bold' }}>
                         {product?.nombre.toUpperCase()}
                     </Typography>
-                    <Typography gutterBottom variant="h6" component="div">
+                    <Typography gutterBottom variant="subtitle2" component="div">
                         Stock total : {product?.stock}
                     </Typography>
-                    <Typography variant="h6" sx={{ color: 'text.secondary' }}>
-                        Precio: {product?.precio}
-                    </Typography>
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                    <Typography variant="body2" sx={{ color: '#003366' }}>
                         Marca: {product?.marca}
+                    </Typography>
+                    <Typography variant="body1" sx={{ color: '#003366', fontWeight: 'bold' }}>
+                        Precio:  {product?.precio} Q
                     </Typography>
 
                 </CardContent>
-                <CardActions sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
+                <CardActions sx={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-end' }}>
                     {comprobation ?
                         <>
-                            <Button size="small" onClick={() => minProducts(product)}>Menos</Button>
-                            <Button size="small">Total: {product.total}</Button>
-                            <Button size="small" onClick={() => AddProduct(product)}>Mas</Button>
+                            <Button size="small" variant="contained" onClick={() => AddProduct(product)}>Agregar +</Button>
                         </>
                         :
                         product.id_estados === 1 ?
-                            product.stock !== 0 ? <Button size="small" onClick={() => AddProduct(product)}>Agregar</Button> : <Button size="small" >No hay stock Disponible </Button>
-                            : <Button size="small" >Producto no disponible</Button>
+                            product.stock !== 0 ?
+                                <Button size="small" variant="contained" onClick={() => AddProduct(product)}>Agregar </Button>
+                                : <Button size="small" disabled={true}>No hay stock Disponible </Button>
+                            : <Button size="small" disabled={true}>Producto no disponible</Button>
                     }
 
                 </CardActions>
