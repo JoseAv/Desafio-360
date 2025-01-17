@@ -92,61 +92,63 @@ export const PagePay = () => {
                             {...register("correo_electronico", { required: true })} />
 
                         <Container sx={{ display: 'flex', gap: '10px' }}>
-                            <Button type="submit" variant="contained" sx={{ width: '200px' }}>Confirmar datos</Button>
                             <Button type="submit" variant="contained" color="error" sx={{ width: '200px' }} onClick={() => Navigate('/cliente/home')}>Cancelar</Button>
+                            <Button type="submit" variant="contained" sx={{ width: '200px' }}>Confirmar datos</Button>
 
                         </Container>
                     </Container>
                 </form >
 
-                <Container sx={{ display: 'flex', alignItems: "center", flexDirection: 'column', gap: '40px', marginTop: '90px' }}>
+                <Container sx={{ display: 'flex', alignItems: "center", flexDirection: 'column', gap: '10px', marginTop: '90px' }}>
                     <h1>Detalle de las ordenes</h1>
+                    <Button sx={{ fontSize: '15px', background: 'var(--primary-color)', color: 'white', width: '100%' }} >Total: {TotalCard()} Q</Button>
                     {productsInCart?.map((ele: typeProductsApi) => (
                         <div key={ele.id}>
+                            <Card sx={{ display: 'flex', width: 300, flexDirection: 'column' }}>
+                                <Container sx={{ display: 'flex' }}>
+                                    <CardMedia
+                                        component="img"
+                                        sx={{
+                                            height: '50%',
+                                            width: '35%',
+                                            objectFit: 'cover',
+                                        }}
+                                        image={ele.foto || '../../../public/No_Disponible_Imagen.jpg'}
+                                        alt="Image no Disponible"
+                                    />
 
-
-
-                            <Card sx={{ display: 'flex' }}>
-                                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                                    <CardContent sx={{ flex: '1 0 auto' }}>
-                                        <Typography component="div" variant="body1">
-                                            {ele.nombre}
-                                        </Typography>
-                                        <Typography
-                                            variant="subtitle1"
-                                            component="div"
-                                            sx={{ color: 'text.secondary' }}
-                                        >
-                                            {ele.precio} Q - Unidad
-                                        </Typography>
-                                        <Typography
-                                            variant="subtitle2"
-                                            component="div"
-                                            sx={{ color: 'text.secondary' }}
-                                        >
-                                            {ele.cantidad} Unidades
-                                        </Typography>
-                                    </CardContent>
-                                    <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
-
+                                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                                        <CardContent sx={{ flex: '1 0 auto' }}>
+                                            <Typography
+                                                component="div"
+                                                variant="subtitle2"
+                                                sx={{ color: 'var(--primary-color)' }}>
+                                                {ele.nombre}
+                                            </Typography>
+                                            <Typography
+                                                variant="h5"
+                                                component="div"
+                                                sx={{ color: 'var(--primary-color)' }}
+                                            >
+                                                {ele.precio} Q
+                                            </Typography>
+                                            <Typography
+                                                variant="subtitle1"
+                                                component="div"
+                                                sx={{ color: 'var(--primary-color)' }}
+                                            >
+                                                Cantidad: {ele.cantidad}
+                                            </Typography>
+                                        </CardContent>
+                                        <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
+                                        </Box>
                                     </Box>
-                                </Box>
-                                <CardMedia
-                                    component="img"
-                                    sx={{
-                                        height: 120,
-                                        width: 100,
-                                        objectFit: 'cover',
-                                    }}
-                                    image={ele.foto ?? 'No foto'}
-                                    alt="Image no Disponible"
-                                />
+                                </Container>
 
                             </Card>
                         </div >
 
                     ))}
-
 
                 </Container>
 

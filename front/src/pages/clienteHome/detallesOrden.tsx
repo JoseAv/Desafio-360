@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { typeProducts, typeProductsApi } from "../../types/operator";
 import { callOrders } from "../../utils/apis/operator/orders";
 import { loginContext } from "../../context/loginContext";
-import { Button, Container, List, ListItem, Paper, Table, TableBody, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, CardMedia, Container, Paper, Table, TableBody, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { StyledTableCell, StyledTableRow } from "../../utils/styles/stylesTable";
 import BarCliente from "../../components/common/navigateCliente";
 
@@ -28,20 +28,6 @@ export const OrdenDetails = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    useEffect(() => {
-        async function callNewOrder() {
-            try {
-                const newOrder = await callOrders({ "acction": "VV", "data": {} })
-                if (newOrder && !order) {
-                    setOrder(newOrder.dataQuery)
-                }
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        callNewOrder()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     async function viewProducts(id: number) {
         try {
@@ -102,7 +88,9 @@ export const OrdenDetails = () => {
                                                 <Button color="secondary" >Pendiente</Button>
                                                 : <Button color="success" >Entregado</Button>}
                                         </StyledTableCell>
-                                        <StyledTableCell align="center"> <Button color="primary" onClick={() => viewProducts(row.id)}>Productos</Button></StyledTableCell>
+                                        <StyledTableCell align="center">
+                                            <Button color="primary" onClick={() => viewProducts(row.id)}>Productos</Button>
+                                        </StyledTableCell>
 
 
                                     </StyledTableRow>
@@ -115,20 +103,48 @@ export const OrdenDetails = () => {
                     <Container sx={{ gap: '10px', display: 'flex', flexDirection: 'column' }} >
                         <h1>Productos</h1>
                         {products.map((ele) => (
-                            <>
-                                <List sx={{ width: '100%', minWidth: 360, bgcolor: 'background.paper', display: 'flex', gap: "10px" }} key={ele.id}>
-                                    <ListItem>
+                            <Card sx={{ display: 'flex', width: 300, flexDirection: 'column' }}>
+                                <Container sx={{ display: 'flex' }}>
+                                    <CardMedia
+                                        component="img"
+                                        sx={{
+                                            height: '50%',
+                                            width: '35%',
+                                            objectFit: 'cover',
+                                        }}
+                                        image={ele.foto || '../../../public/No_Disponible_Imagen.jpg'}
+                                        alt="Image no Disponible"
+                                    />
 
-                                        <Typography
-                                            variant="subtitle2"
-                                            component="div"
-                                            sx={{ color: 'text.secondary' }}
-                                        >
-                                            Nombre: {ele.nombre} ---- Cantidad Comprada: {ele.cantidad}
-                                        </Typography>
-                                    </ListItem>
-                                </List>
-                            </>
+                                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                                        <CardContent sx={{ flex: '1 0 auto' }}>
+                                            <Typography
+                                                component="div"
+                                                variant="subtitle2"
+                                                sx={{ color: 'var(--primary-color)' }}>
+                                                {ele.nombre}
+                                            </Typography>
+                                            <Typography
+                                                variant="subtitle1"
+                                                component="div"
+                                                sx={{ color: 'var(--primary-color)' }}
+                                            >
+                                                {ele.precio} Q
+                                            </Typography>
+                                            <Typography
+                                                variant="h6"
+                                                component="div"
+                                                sx={{ color: 'var(--primary-color)' }}
+                                            >
+                                                Cantidad {ele.cantidad}
+                                            </Typography>
+                                        </CardContent>
+                                        <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
+                                        </Box>
+                                    </Box>
+                                </Container>
+
+                            </Card>
 
                         ))}
 
