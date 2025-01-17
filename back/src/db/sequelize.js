@@ -6,3 +6,5 @@ export const sequelize = new Sequelize('GDA00337_OT_Jose_Arana', 'myuser', '123'
     dialect: 'mssql',
     logging: console.log
 })
+
+

@@ -9,11 +9,10 @@ export class ControllersUser {
     }
 
     login = async (req, res) => {
-
         if (!ComprobateUser(req.body).success) return ValidationResponse.Denied({ message: MessagePersonalise.DataEmpty('Datos Incorrecto') })
         const loginUser = await this.userModel.login({ data: req.body })
-        if (!loginUser.success) return res.status(loginUser.statusCode).json({ ...loginUser })
         console.log(loginUser)
+        if (!loginUser.success) return res.status(loginUser.statusCode).json({ ...loginUser })
         let token = jwt.sign(loginUser.dataQuery, SecretePass, { expiresIn: '1d' })
         return res.status(loginUser.statusCode).cookie('access_user', token, {
             httpOnly: true,

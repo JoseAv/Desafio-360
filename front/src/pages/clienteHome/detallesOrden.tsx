@@ -63,7 +63,7 @@ export const OrdenDetails = () => {
                 <Container >
                     <h1>Ordenes Orden # {selected}</h1>
                     <TableContainer component={Paper}>
-                        <Table sx={{ width: "1000px" }} aria-label="customized table">
+                        <Table sx={{ width: "800px" }} aria-label="customized table">
                             <TableHead>
                                 <TableRow>
                                     <StyledTableCell>Nombre Completo</StyledTableCell>

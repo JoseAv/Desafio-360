@@ -60,10 +60,11 @@ export const Login = () => {
                         flexDirection: 'column',
                         gap: 5,
                         alignItems: 'center',
-                        height: '100vh'
+                        height: '100vh',
+                        justifyContent: 'center'
                     }}
                 >
-                    <h1 style={{ fontSize: '60px', marginTop: '150px' }}>Iniciar Sesión</h1>
+                    <h1 style={{ fontSize: '60px' }}>Iniciar Sesión</h1>
 
                     <TextField
                         id="CorreoElectronico"

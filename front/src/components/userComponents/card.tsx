@@ -18,7 +18,7 @@ export const PagesCard: React.FC<typeProducts> = ({ product = null }) => {
     return (
         <>
 
-            <Card sx={{ maxWidth: 360, width: 260, height: 300, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <Card sx={{ maxWidth: 360, width: 220, height: 300, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <CardMedia
                     sx={{
                         height: 90,

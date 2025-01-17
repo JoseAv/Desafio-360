@@ -17,7 +17,7 @@ export default function BarCliente() {
 
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ width: '1000px' }}>
             <AppBar position="static" sx={{ background: 'var(--primary-color)' }}>
                 <Toolbar variant="dense">
                     <Container sx={{ display: 'flex', justifyContent: "space-between" }}>

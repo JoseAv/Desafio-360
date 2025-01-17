@@ -33,7 +33,7 @@ export class ModelUsers {
             return ValidationResponse.Accepted({ message: MessagePersonalise.dataSuccessful('Usuario') })
 
         } catch (error) {
-            console.log(error)
+            console.log('Error aqui', error)
             return ValidationResponse.Denied({ message: MessagePersonalise.failPeticion(error) })
         }
     }
@@ -103,6 +103,7 @@ export class ModelUsers {
             return ValidationResponse.Accepted({ message: MessagePersonalise.passUSer(), dataQuery: { correo_electronico: data.correo_electronico, id: validateEmail[0].id, rol: validateEmail[0].id_rol, id_estados: validateEmail[0].id_estados } })
 
         } catch (error) {
+            console.log(error)
             return ValidationResponse.Denied({ message: MessagePersonalise.failPeticion(error) })
         }
 

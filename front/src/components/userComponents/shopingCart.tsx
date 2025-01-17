@@ -8,7 +8,7 @@ import { ShopingContext } from '../../context/shopingCardContext';
 import { typeProductsApi } from '../../types/operator';
 import { useNavigate } from 'react-router-dom';
 
-const drawerWidth = 300;
+const drawerWidth = 220;
 
 interface Props {
     window?: () => Window;
